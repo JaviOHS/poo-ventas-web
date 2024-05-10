@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGV</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/nav_bar_footer.css">
+</head>
+<body>
+  <header class="header fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">SGV <i class="fa-solid fa-store"></i></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkProductos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Productos <i class="fa-solid fa-tags"></i>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkProductos">
+                <li><a class="dropdown-item" href="/products/create">Ingresar productos</a></li>
+                <li><a class="dropdown-item" href="/products/update">Actualizar productos</a></li>
+                <li><a class="dropdown-item" href="/products/consult">Consultar productos</a></li>
+                <li><a class="dropdown-item" href="/products/delete">Eliminar productos</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkClientes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Clientes <i class="fa-solid fa-user-tag"></i>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkClientes">
+                <li><a class="dropdown-item" href="/clients/create">Ingresar clientes</a></li>
+                <li><a class="dropdown-item" href="/clients/update">Actualizar clientes</a></li>
+                <li><a class="dropdown-item" href="/clients/consult">Consultar clientes</a></li>
+                <li><a class="dropdown-item" href="/clients/delete">Eliminar clientes</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkVentas" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Ventas <i class="fa-solid fa-cart-shopping"></i>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkVentas">
+                <li><a class="dropdown-item" href="/sales/create">Ingresar ventas</a></li>
+                <li><a class="dropdown-item" href="/sales/update">Actualizar ventas</a></li>
+                <li><a class="dropdown-item" href="/sales/consult">Consultar ventas</a></li>
+                <li><a class="dropdown-item" href="/sales/delete">Eliminar ventas</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <footer>
+    <div class="footer-content">
+      <p>Universidad Estatal de Milagro - UNEMI</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+
+/* Estilos para la barra de navegación */
+.header {
+  padding: 20px;
+  background-color: #bfd0dd;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+}
+
+.navbar-brand {
+  padding: 20px 50px;
+  color: #071739;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.navbar-nav {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  padding: 10px 30px;
+  color: #071739;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.nav-link i {
+  font-size: 25px;
+  line-height: 0;
+  margin-left: 15px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #D1A980;
+}
+
+.dropdown-menu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 10px);
+  display: none;
+  min-width: 200px;
+  padding: 10px 0;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+  transition: opacity 0.5s; /* Ajusta la duración de la transición */
+  border-radius: 4px;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 20px;
+  color: #071739;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  transition: color 0.3s;
+}
+
+.dropdown-item:hover {
+  color: #D1A980;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Estilos para el pie de página */
+footer {
+  color: #071739;
+  text-align: center;
+  padding: 20px 0;
+  background-color: #bfd0dd;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+}
+
+.footer-content {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+}
