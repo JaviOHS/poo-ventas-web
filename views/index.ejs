@@ -1,23 +1,145 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('partials/head') %>
   <title>SGV</title>
-  <link rel="icon" href="/IMG/logo.png" type="image/png">
-  <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
   <%- include('partials/navbar') %>
+  <!-- ======= Sección de Servicios ======= -->
+  <section id="services" class="services">
+    <div class="container">
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="section-title" data-aos="fade-up">
+        <h2>BIENVENIDO A LA APLICACIÓN PARA GESTIONAR TUS VENTAS</h2>
+        <br>
+        <h2>Servicios</h2>
+        <p>Descubra los diferentes servicios que podemos ofrecerles</p>
+      </div>
 
-  <section class="container">
-    <div class="box">
-      <h1 class="title">Una solucion para tu negocio. </h1>
-      <h2 class="sub">SGV es un sistema de gestion de ventas que te permitira llevar un control de tus productos, clientes y ventas de manera eficiente.</h2>
-    </div>
-    <div class="imagen">
-      <a href="https://es.lovepik.com/images/png-marketing.html" target="_blank"><img src="../IMG/index.png" class="img-fluid" alt="Credits: lovepik.com"></a>
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+          <div class="icon-box card1" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon"><i class="bi bi-people"></i></div>
+            <h4 class="title"><a href="/gestion_clientes">Gestión de Clientes</a></h4>
+            <p class="description">Este módulo se centra principalmente en la gestión de los Clientes, pudiendo añadir nuevos clientes, actualizar información del mismo, consultar y eliminar a los clientes.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+          <div class="icon-box card2" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon"><i class="bi bi-box"></i></div>
+            <h4 class="title"><a href="/gestion_productos">Gestión de Productos</a></h4>
+            <p class="description">Este módulo se centra principalmente en la gestión de los Productos, pudiendo añadir nuevos productos, actualizar información del mismo, consultar y eliminar los productos.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+          <div class="icon-box card3" data-aos="fade-up" data-aos-delay="300">
+            <div class="icon"><i class="bi bi-cart"></i></div>
+            <h4 class="title"><a href="/gestion_ventas">Gestión de Ventas</a></h4>
+            <p class="description">Este módulo se centra principalmente en el gestionamiento de las Ventas, pudiendo añadir nuevas ventas, actualizar información del mismo, consultar y eliminar las ventas registradas.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
+
+  <!-- ======= Sección de Características ======= -->
+  <section id="features" class="features">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Cracterísticas</h2>
+        <p>Descubra lo que le podemos brindar</p>
+      </div>
+
+      <div class="row" data-aos="fade-up" data-aos-delay="300">
+        <div class="col-lg-3 col-md-4">
+          <div class="icon-box">
+            <i class="bi bi-person-check" style="color: #ffbb2c;"></i>
+            <h3><a href="">Dar seguimiento a sus clientes</a></h3>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
+          <div class="icon-box">
+            <i class="bi bi-display" style="color: #5578ff;"></i>
+            <h3><a href="">Interfaz Minimalista</a></h3>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
+          <div class="icon-box">
+            <i class="bi bi-clock" style="color: #e80368;"></i>
+            <h3><a href="">Disponible 24/7</a></h3>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 mt-4 mt-lg-0">
+          <div class="icon-box">
+            <i class="bi bi-cart" style="color: #e361ff;"></i>
+            <h3><a href="">Gestiona tus Ventas</a></h3>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 mt-4">
+          <div class="icon-box">
+            <i class="bi bi-check-circle" style="color: #ffa76e;"></i>
+            <h3><a href="">Servisio Garantizados</a></h3>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 mt-4">
+          <div class="icon-box">
+            <i class="bi bi-shield" style="color: #4233ff;"></i>
+            <h3><a href="">Aplicación Segura</a></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= Sección de Equipos ======= -->
+  <section id="team" class="team section-bg">
+    <div class="container">
+
+      <div class="section-title" data-aos="fade-up">
+        <h2>Equipo de Trabajo</h2>
+        <p>Conozca a nuestro equipo profesional y altamente especializado.</p>
+      </div>
+
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+          <div class="member">
+            <div class="member-img">
+              <img src="img/perfil.png" class="img-fluid" alt="">
+            </div>
+            <div class="member-info">
+              <h4>STEVEN ALEXANDER NIETO DURAN</h4>
+              <span>Jefe de Proyecto</span>
+              <br>
+              <span>Programador</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+          <div class="member">
+            <div class="member-img">
+              <img src="img/perfil_jhs.jpeg" class="img-fluid" alt="">
+            </div>
+            <div class="member-info">
+              <h4>JAVIER OMAR HARO SOLEDISPA</h4>
+              <span>Jefe de Proyecto</span>
+              <br>
+              <span>Programador</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <%- include('partials/footer') %>
 </body>
 </html>

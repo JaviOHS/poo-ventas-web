@@ -8,10 +8,32 @@ const rutaArchivo = path.join(__dirname, '..', 'json', 'clients.json');
 const json_clients = fs.readFileSync(rutaArchivo, 'utf-8')
 const clients = JSON.parse(json_clients);
 
+// RUTAS PRINCIPALES 
 router.get('/', (req, res) => {
     res.render('index', {clients});
 });
 
+router.get('/gestion_clientes', (req, res) => {
+    res.render('gestion_clientes', {clients});
+});
+
+router.get('/gestion_productos', (req, res) => {
+    res.render('gestion_productos', {clients});
+});
+
+router.get('/gestion_ventas', (req, res) => {
+    res.render('gestion_ventas', {clients});
+});
+
+router.get('/login', (req, res) => {
+    res.render('login', {clients});
+});
+
+router.get('/exit', (req, res) => {
+    res.render('exit', {clients});
+});
+
+// RUTAS DE MODULOS 
 router.get('/clients/create', (req, res) => {
     res.render('clients/create_clients');
 });

@@ -1,46 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SGV</title>
-  <link rel="icon" href="/IMG/logo.png" type="image/png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="/CSS/create.css">
+  <%- include('../partials/head') %>
+  <title>SGV | Crear Clientes</title>
 </head>
 <body>
   <%- include('../partials/navbar') %>
-  <section class="container">
-    <h1 class="title">Registrar Cliente</h1>
-    <h2 class="sub">Llene los datos para registrar un nuevo cliente.</h2>
-    <form method="POST" target="/clients/create" class="card card-body" >
-      <fieldset>
-        <div class="mb-3">
-          <label for="dni" class="form-label">DNI:</label>
-          <input type="text" class="form-control" id="dni" name="dni" required>
-        </div>
-        
-        <div class="mb-3">
-          <label for="nombre" class="form-label">Nombre:</label>
-          <input type="text" class="form-control" id="nombre" name="nombre" required>
-        </div>
-  
-        <div class="mb-3">
-          <label for="apellido" class="form-label">Apellido:</label>
-          <input type="text" class="form-control" id="apellido" name="apellido" required>
-        </div>
-  
-        <div class="mb-3">
-          <label for="valor" class="form-label">Valor:</label>
-          <input type="number" class="form-control" id="valor" name="valor" required>
-        </div>
-  
-        <input type="submit" id="submitButton" value="Guardar cambios" class="btn btn-primary">
-        <button type="button" class="btn btn-secondary" onclick="window.location.href='/';">Cancelar</button>
-      </fieldset>
-    </form>
+  <section id="services" class="services">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>INGRESAR CLIENTES</h2>
+        <p>Ingrese los datos en el formulario para ingresar un nuevo cliente.</p>
+      </div>
+      <form method="POST" action="/clients/create" class="card card-body">
+        <fieldset>
+          <div class="mb-3">
+            <label for="dni" class="form-label">DNI:</label>
+            <input type="text" class="form-control" id="dni" name="dni" required>
+          </div>
+          
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required>
+          </div>
+    
+          <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido:</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" required>
+          </div>
+    
+          <div class="mb-3">
+            <label for="valor" class="form-label">Valor:</label>
+            <input type="number" class="form-control" id="valor" name="valor" required>
+          </div>
+    
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          <a href="/" class="btn btn-secondary">Cancelar</a>
+        </fieldset>
+      </form>
+    </div>
   </section>
-  
   <script src="/js/validaciones_cliente.js"></script>
+  <%- include('../partials/footer') %>
 </body>
 </html>

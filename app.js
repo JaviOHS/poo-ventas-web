@@ -13,6 +13,11 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
+app.use((req, res, next) => {
+    res.locals.staticBasePath = '/'; // Esto debería ser la ruta base de tus archivos estáticos
+    next();
+});
+
 // Routes
 app.use(require('./routes/index'));
 
