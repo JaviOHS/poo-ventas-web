@@ -16,7 +16,7 @@
       <div class="section-title" data-aos="fade-up">
         <h2>CONSULTAR INFORMACION DE CLIENTES</h2>
         <br>
-        <p>Consulte informacion especifica de clientes.</p>
+        <p>Consulte informacion de clientes.</p>
       </div>
       <div class="container p-4">
         <div class="row">
@@ -25,16 +25,20 @@
             <div class="card mb-3">
               <div class="card-header-consult">
                 <div class="avatar">
-                  <img src="<%= client.imagen || 'https://i.pinimg.com/236x/e3/a8/1f/e3a81f643ac8b306f2534cb84de0990d.jpg' %>" alt="Avatar">
+                  <img src="<%= client.imagen || 'https://cdn-icons-png.flaticon.com/512/12267/12267913.png' %>" alt="Avatar">
                 </div>
               </div>
               <div class="card-body">
                 <h2 class="card-title text-center"><%= client.nombre %> <%= client.apellido %></h2>
               </div>
               <div class="card-footer">
-                <p class="card-text text-center"><%= client.dni %></p>
+                <h3>DNI: </h3>
+                <p class="card-text text-center"><%= client.dni %>  </p>
+                <h3>VALOR: </h3>
                 <p class="card-text text-center"><%= client.valor %></p>
+                <h3>TIPO DE CIENTE: </h3>
                 <p class="card-text text-center"><%= client.tipo %></p>
+                
               </div>
             </div>
           </div>
