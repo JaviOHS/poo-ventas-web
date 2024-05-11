@@ -4,6 +4,7 @@
 </head>
 <body>
   <%- include('../partials/navbar') %>
+  <!-- Contenido -->
   <section id="services" class="services">
     <div class="container">
       <br>
@@ -11,39 +12,65 @@
       <br>
       <br>
       <div class="section-title" data-aos="fade-up">
-        <h2>INGRESAR CLIIENTES</h2>
+        <h2>INGRESAR CLIENTES</h2>
         <br>
         <p>Ingrese los datos para registrar un nuevo cliente.</p>
       </div>
-      <form method="POST" action="/clients/create" class="card card-body">
+      <form id="form" class="card card-body" method="POST" action="/clients/create" onsubmit="validarFormulario(event)">
         <fieldset>
-          <div class="mb-3">
-            <label for="dni" class="form-label">DNI:</label>
-            <input type="text" class="form-control" id="dni" name="dni" required>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label for="dni" class="form-label">DNI:</label>
+                <input type="text" class="form-control" id="dni" name="dni" required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label for="apellido" class="form-label">Apellido:</label>
+                <input type="text" class="form-control" id="apellido" name="apellido" required>
+              </div>
+            </div>
           </div>
-          
+
           <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre:</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" required>
+            <label for="imagen" class="form-label">URL Imagen:</label>
+            <input type="text" class="form-control" id="imagen" name="imagen">
           </div>
-    
-          <div class="mb-3">
-            <label for="apellido" class="form-label">Apellido:</label>
-            <input type="text" class="form-control" id="apellido" name="apellido" required>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="valor" class="form-label">Valor:</label>
+                <input type="number" class="form-control" id="valor" name="valor" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="tipo" class="form-label">Tipo:</label>
+                <select class="form-select" id="tipo" name="tipo">
+                  <option value="Regular">Regular</option>
+                  <option value="VIP">VIP</option>
+                </select>
+              </div>
+            </div>
           </div>
-    
-          <div class="mb-3">
-            <label for="valor" class="form-label">Valor:</label>
-            <input type="number" class="form-control" id="valor" name="valor" required>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar cambios</button>
           </div>
-    
-          <button type="submit" class="btn btn-primary">Guardar cambios</button>
-          <a href="/" class="btn btn-secondary">Cancelar</a>
         </fieldset>
       </form>
+      <div class="text-center">
+        <a href="/gestion_clientes" class="btn btn-primary"><i class="fas fa-home"></i> Regresar</a>
+      </div>
     </div>
   </section>
-  <script src="/js/validaciones_cliente.js"></script>
+  <script src="/js/validaciones.js"></script>
   <%- include('../partials/footer') %>
 </body>
-</html>
