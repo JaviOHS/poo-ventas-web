@@ -21,10 +21,10 @@
         <% products.forEach(function (product) { %>
           <div class="col-md-4">
             <div class="card mb-3">
-              <div class="card-header">
+              <div class="card-header-update">
                 <!-- Avatar del producto -->
-                <div class="avatar">
-                  <img src="<%= product.imagen || 'https://cdn-icons-png.flaticon.com/512/12267/12267913.png' %>" alt="Avatar">
+                <div class="avatar-update">
+                  <img src="<%= product.imagen || 'https://cdn-icons-png.freepik.com/512/10004/10004062.png' %>" alt="Avatar">
                 </div>
               </div>
               <div class="card-body">
@@ -56,6 +56,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/validaciones.js"></script>
   <%- include('../partials/footer') %>
 </body>
 </html>

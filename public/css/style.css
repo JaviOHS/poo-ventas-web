@@ -65,11 +65,11 @@ a {
 }
 
 #header .logo img {
-  padding: 0;
-  margin: 0;
-  max-height: 70px;
+  max-height: 100px; /* Define una altura máxima para el logo */
+  width: auto; /* Permitir que el ancho se ajuste automáticamente según la altura máxima */
+  display: block; /* Asegura que la imagen se comporte como un bloque para manejar márgenes y alineaciones */
+  margin: 0 auto; /* Centra el logo horizontalmente */
 }
-
 /*--------------------------------------------------------------
 # Menú de Navegación
 --------------------------------------------------------------*/
@@ -83,6 +83,7 @@ a {
   display: flex;
   list-style: none;
   align-items: center;
+  text-transform: uppercase;
 }
 
 .navbar li {
@@ -194,7 +195,6 @@ a {
     left: -100%;
   }
 }
-
 
 /*--------------------------------------------------------------
 # Sections General
@@ -432,6 +432,7 @@ h4 {
 
 
 .section-title h2 {
+  padding-top: 5%;
   color: #000000;
 }
 

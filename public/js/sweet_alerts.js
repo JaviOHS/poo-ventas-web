@@ -11,7 +11,16 @@ function mostrarEsperaAutomatica() {
   });
 }
 
-// Validar el formulario de creación de clientes
+function mostrarError(mensaje) {
+  Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: mensaje,
+    confirmButtonText: 'Aceptar'
+  });
+}
+
+// ------------------ CREACION DE CLIENTES ------------------
 async function validarFormulario(event) {
   event.preventDefault(); // Detiene el envío del formulario
   const dni = document.getElementById('dni').value;
@@ -43,15 +52,6 @@ async function validarFormulario(event) {
     console.error('Error al validar el formulario:', error);
     mostrarError('Hubo un error al validar el formulario. Por favor, inténtelo de nuevo.');
   }
-}
-
-function mostrarError(mensaje) {
-  Swal.fire({
-    icon: 'error',
-    title: 'Error',
-    text: mensaje,
-    confirmButtonText: 'Aceptar'
-  });
 }
 
 function confirmarEliminacion(clientId) {
@@ -210,3 +210,169 @@ function mostrarFormularioActualizacion(clientId) {
       });
   });
 };
+
+// ------------------ CREACION DE PRODUCTOS ------------------
+async function validarFormularioProductos(event) {
+  event.preventDefault(); // Detiene el envío del formulario
+  const id = document.getElementById('id').value;
+  const descripcion = document.getElementById('descripcion').value;
+  const precio = document.getElementById('precio').value;
+  const stock = document.getElementById('stock').value;
+
+  try {
+    if (!Validaciones.soloNumeros(id)) {
+      mostrarError('La ID debe ser un número entero positivo. Por favor, inténtelo de nuevo.');
+    } else if (!Validaciones.soloDecimales(precio)) {
+      mostrarError('El precio debe ser un número entero o decimal. Por favor, inténtelo de nuevo.');
+    } else if (!Validaciones.soloNumeros(stock)) {
+      mostrarError('La cantidad debe ser un número entero y positivo. Por favor, inténtelo de nuevo.');
+    } else {
+      Swal.fire({
+        title: 'Producto agregado!',
+        text: 'El producto se ha agregado correctamente.',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      }).then(() => {
+        window.location.reload(); // Después de aceptar el mensaje de éxito, recargar la página
+        event.target.submit(); // Envía el formulario si todas las validaciones pasan
+      });
+    }
+  } catch (error) {
+    console.error('Error al validar el formulario:', error);
+    mostrarError('Hubo un error al validar el formulario. Por favor, inténtelo de nuevo.');
+  }
+}
+
+function mostrarFormularioActualizacionProductos(productId) {
+  // Realizar una solicitud GET al servidor para obtener los datos actuales del producto
+  fetch(`/products/consult/${productId}`)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Error al obtener los datos del producto');
+      }
+    })
+    .then(productData => {
+      // Extraer los datos del producto
+      const {id, descripcion, precio, stock, imagen } = productData;
+      // Mostrar el Sweet Alert con los datos actuales del producto en los campos del formulario
+      Swal.fire({
+        title: 'Actualizar Producto',
+        html: `
+          <div class="card card-body" style="overflow-x: hidden;">
+            <label class="form-label">ID:</label>
+            <input id="dni" class="form-control mb-3" value="${id}" disabled>
+            <div class="form-group">
+              <label class="form-label">Descripción:</label>
+              <input id="newDescripcion" class="form-control mb-3" placeholder="Nueva Descripción" value="${descripcion}">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Precio:</label>
+              <input type="text" id="newPrecio" class="form-control mb-3" placeholder="Nuevo Precio" value="${precio}" required step="0.01">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Stock:</label>
+              <input type="number" id="newStock" class="form-control mb-3" placeholder="Nuevo Stock" value="${stock}">
+            </div>
+            <div class="form-group">
+              <label class="form-label">URL de la imagen:</label>
+              <input id="newImagen" class="form-control mb-3" placeholder="Nueva Imagen" value="${imagen}">
+            </div>
+          </div>
+        `,
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: 'Actualizar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const newDescripcion = document.getElementById('newDescripcion').value;
+          const newPrecio = document.getElementById('newPrecio').value;
+          const newStock = document.getElementById('newStock').value;
+          const newImagen = document.getElementById('newImagen').value;
+
+          // Validar los nuevos datos
+          if (!Validaciones.soloDecimales(newPrecio)) {
+            mostrarError('El precio debe ser un número entero o flotante. Por favor, inténtelo de nuevo.');
+          } else if (!Validaciones.soloNumeros(newStock)) {
+            mostrarError('La cantidad debe ser un número entero y positivo. Por favor, inténtelo de nuevo.');
+          } else {
+            // Realizar la solicitud al servidor para actualizar el producto
+            fetch(`/products/update/${productId}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                descripcion: newDescripcion,
+                precio: newPrecio,
+                stock: newStock,
+                imagen: newImagen
+              })
+            }).then(response => {
+              // Verificar si la actualización fue exitosa
+              if (response.ok) {
+                // Muestra el Sweet Alert de éxito
+                Swal.fire({
+                  title: '¡Producto actualizado!',
+                  text: 'El producto se ha actualizado correctamente.',
+                  icon: 'success',
+                  confirmButtonText: 'Aceptar'
+                }).then(() => {
+                  // Después de aceptar el mensaje de éxito, recargar la página
+                  window.location.reload();
+                });
+              } else {
+                // Si hubo un error al actualizar el producto, muestra un mensaje de error
+                mostrarError('Hubo un error al actualizar el producto. Por favor, inténtalo de nuevo.');
+              }
+            }).catch(error => {
+              // Si hubo un error en la solicitud, muestra un mensaje de error
+              mostrarError('Hubo un error al actualizar el producto. Por favor, inténtalo de nuevo.');
+            });
+          }
+        };
+      });
+  });
+};
+
+function confirmarEliminacionProducto(productId) {
+  Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡Una vez eliminado, no podrás recuperar este producto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+  }).then((result) => {
+      if (result.isConfirmed) {
+          // Realiza la solicitud al servidor para eliminar el producto
+          fetch(`/products/delete/${productId}`, {
+              method: 'GET'
+          }).then(response => {
+              // Verifica si la eliminación fue exitosa
+              if (response.ok) {
+                  Swal.fire({ // Mensaje de éxito
+                      title: '¡Producto eliminado!',
+                      text: 'La eliminación del producto se ha realizado correctamente.',
+                      icon: 'success',
+                      confirmButtonText: 'Aceptar'
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          location.reload(); // Recargar la página
+                      }
+                  });
+              } else {
+                  // Si hubo un error al eliminar el producto, muestra un mensaje de error
+                  mostrarError('Hubo un error al eliminar el producto. Por favor, inténtalo de nuevo.');
+              }
+          }).catch(error => {
+              // Si hubo un error en la solicitud, muestra un mensaje de error
+              mostrarError('Hubo un error al eliminar el producto. Por favor, inténtalo de nuevo.');
+          });
+      }
+  });
+}

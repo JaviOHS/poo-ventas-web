@@ -20,29 +20,35 @@
       </div>
       <div class="container p-4">
         <div class="row">
-          <% clients.forEach(function (client) { %>
-          <div class="col-md-4">
-            <div class="card mb-3">
-              <div class="card-header-delete">
-                <div class="avatar-delete">
-                  <img src="<%= client.imagen || 'https://cdn-icons-png.flaticon.com/512/12267/12267913.png' %>" alt="Avatar">
+          <% if (clients.length === 0) { %>
+            <div class="col-md-12 text-center">
+              <p>No hay clientes disponibles. Por favor, agregue clientes para visualizarlos.</p>
+            </div>
+          <% } else { %>
+            <% clients.forEach(function (client) { %>
+            <div class="col-md-4">
+              <div class="card mb-3">
+                <div class="card-header-delete">
+                  <div class="avatar-delete">
+                    <img src="<%= client.imagen || 'https://cdn-icons-png.flaticon.com/512/12267/12267913.png' %>" alt="Avatar">
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h2 class="card-title text-center"><%= client.nombre %> <%= client.apellido %></h2>
+                </div>
+                <div class="card-footer">
+                  <h3>DNI: </h3>
+                  <p class="card-text text-center"><%= client.dni %>  </p>
+                  <h3>VALOR: </h3>
+                  <p class="card-text text-center"><%= client.valor %></p>
+                  <h3>TIPO DE CIENTE: </h3>
+                  <p class="card-text text-center"><%= client.tipo %></p>
+                  <button class="btn delete-button" onclick="confirmarEliminacion('<%= client.id %>')"><i class="fas fa-trash"></i> Eliminar</button>
                 </div>
               </div>
-              <div class="card-body">
-                <h2 class="card-title text-center"><%= client.nombre %> <%= client.apellido %></h2>
-              </div>
-              <div class="card-footer">
-                <h3>DNI: </h3>
-                <p class="card-text text-center"><%= client.dni %>  </p>
-                <h3>VALOR: </h3>
-                <p class="card-text text-center"><%= client.valor %></p>
-                <h3>TIPO DE CIENTE: </h3>
-                <p class="card-text text-center"><%= client.tipo %></p>
-                <button class="btn delete-button" onclick="confirmarEliminacion('<%= client.id %>')"><i class="fas fa-trash"></i> Eliminar</button>
-              </div>
             </div>
-          </div>
-          <% }) %>
+            <% }) %>
+          <% } %>
         </div>
       </div>
       <div class="text-center">
