@@ -1,0 +1,30 @@
+[
+    {
+        "id": "1",
+        "descripcion": "Papas Fritas",
+        "precio": 0.5,
+        "stock": 100,
+        "imagen": "https://catu.ec/wp-content/uploads/2022/03/Papas-Fritas-Cebolla-20g-Sarita-Rizada.jpg"
+    },
+    {
+        "id": "2",
+        "descripcion": "Coca Cola",
+        "precio": 1.5,
+        "stock": 10,
+        "imagen": "https://d2o812a6k13pkp.cloudfront.net/Productos/40432365_01.jpg"
+    },
+    {
+        "id": "3",
+        "descripcion": "Pony Malta",
+        "precio": 0.75,
+        "stock": 1,
+        "imagen": "https://copservir.vtexassets.com/arquivos/ids/1163731/PONY-MALTA_F.png?v=638413915426870000"
+    },
+    {
+        "id": "4",
+        "descripcion": "Manzana",
+        "precio": "11",
+        "stock": "66",
+        "imagen": "https://w7.pngwing.com/pngs/14/397/png-transparent-apple-fruit-green-apple-red-apple.png"
+    }
+]

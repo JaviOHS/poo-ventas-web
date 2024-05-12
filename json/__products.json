@@ -1,1 +1,50 @@
-[{"id": 0, "descripcion": "Defecto", "precio": 0, "stock": 0}, {"id": 1, "descripcion": "Cocos", "precio": 2.5, "stock": 100}, {"id": 2, "descripcion": "Guitarra", "precio": 90.0, "stock": 100}, {"id": 3, "descripcion": "Esfero azul", "precio": 0.35, "stock": 100}, {"id": 5, "descripcion": "Pollo Asado", "precio": 2.5, "stock": 100}, {"id": 6, "descripcion": "Agua Cielo", "precio": 1.0, "stock": 120}, {"id": 7, "descripcion": "Laptop", "precio": 1000.0, "stock": 100}, {"id": 8, "descripcion": "Pa ti pa mi Queso", "precio": 0.75, "stock": 100}]
+[
+    {
+        "id": 0,
+        "descripcion": "Defecto",
+        "precio": 0,
+        "stock": 0
+    },
+    {
+        "id": 1,
+        "descripcion": "Cocos",
+        "precio": 2.5,
+        "stock": 100
+    },
+    {
+        "id": 2,
+        "descripcion": "Guitarra",
+        "precio": 90.0,
+        "stock": 100
+    },
+    {
+        "id": 3,
+        "descripcion": "Esfero azul",
+        "precio": 0.35,
+        "stock": 100
+    },
+    {
+        "id": 5,
+        "descripcion": "Pollo Asado",
+        "precio": 2.5,
+        "stock": 100
+    },
+    {
+        "id": 6,
+        "descripcion": "Agua Cielo",
+        "precio": 1.0,
+        "stock": 120
+    },
+    {
+        "id": 7,
+        "descripcion": "Laptop",
+        "precio": 1000.0,
+        "stock": 100
+    },
+    {
+        "id": 8,
+        "descripcion": "Pa ti pa mi Queso",
+        "precio": 0.75,
+        "stock": 100
+    }
+]
