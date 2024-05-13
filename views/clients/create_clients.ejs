@@ -61,6 +61,29 @@
               </div>
             </div>
           </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="tarjeta" class="form-label">Tarjeta:</label>
+                <select class="form-select" id="tarjeta" name="tarjeta">
+                  <option value="no">No</option>
+                  <option value="si">Sí</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6" id="numeroTarjetaContainer" style="display: none;">
+              <div class="mb-3">
+                  <label for="numeroTarjeta" class="form-label">Número de tarjeta:</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-credit-card"></i></span>
+                    <input type="text" class="form-control" id="numeroTarjeta" name="numeroTarjeta" maxlength="19">
+                  </div>
+              </div>
+            </div>
+          </div>
+          
+
           <div class="text-center">
             <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar cambios</button>
           </div>
@@ -71,6 +94,30 @@
       </div>
     </div>
   </section>
+  <script>
+    document.getElementById('numeroTarjeta').addEventListener('input', function (e) {
+        var inputValue = e.target.value.replace(/\D/g, '').substring(0, 16); // Elimina cualquier caracter que no sea un dígito y limita la longitud a 16 dígitos
+        var newValue = '';
+        for (var i = 0; i < inputValue.length; i++) {
+            if (i % 4 === 0 && i > 0) {
+                newValue += ' '; // Agrega un espacio cada 4 dígitos para simular el formato de una tarjeta de crédito
+            }
+            newValue += inputValue[i];
+        }
+        e.target.value = newValue;
+    });
+  </script>
+  <script>
+    document.getElementById('tarjeta').addEventListener('change', function() {
+      var numeroTarjetaContainer = document.getElementById('numeroTarjetaContainer');
+      if (this.value === 'si') {
+        numeroTarjetaContainer.style.display = 'block';
+      } else {
+        numeroTarjetaContainer.style.display = 'none';
+      }
+    });
+  </script>
+
   <script src="/js/validaciones.js"></script>
   <%- include('../partials/footer') %>
 </body>

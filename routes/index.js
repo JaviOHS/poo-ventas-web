@@ -56,7 +56,7 @@ router.get('/clients/create', (req, res) => {
 });
 
 router.post('/clients/create', async (req, res) => {
-    const {dni, nombre, apellido, imagen, valor, tipo} = req.body;
+    const { dni, nombre, apellido, imagen, valor, tipo, tarjeta, numeroTarjeta } = req.body;
     const dniEnUso = await Validaciones.dniExistente(dni);
     
     if (dniEnUso) {
@@ -64,6 +64,10 @@ router.post('/clients/create', async (req, res) => {
     }
 
     const valorFloat = parseFloat(valor);
+
+    // Convertir el valor de 'tarjeta' a booleano
+    const tieneTarjeta = tarjeta === 'si';
+
     let newClient = {
         id: uuid.v4(),
         dni, 
@@ -71,8 +75,11 @@ router.post('/clients/create', async (req, res) => {
         apellido, 
         imagen,
         valor: valorFloat,
-        tipo
+        tipo,
+        tarjeta: tieneTarjeta, // Guardar como booleano
+        numeroTarjeta,
     };
+    
     clients.push(newClient);
     const json_clients = JSON.stringify(clients);
     fs.writeFileSync(rutaArchivo, json_clients, 'utf-8');
@@ -85,25 +92,25 @@ router.get('/clients/update', (req, res) => {
 
 router.post('/clients/update/:id', (req, res) => {
     const clientId = req.params.id;
-    const {dni, nombre, apellido, imagen, valor, tipo} = req.body;
+    const {dni, nombre, apellido, imagen, valor, tipo, tarjeta, numeroTarjeta} = req.body; // Agregar 'tarjeta' y 'numeroTarjeta' aquí
     const valorFloat = parseFloat(valor);
 
     // Buscar el cliente por su ID en el array 'clients'
     const clientIndex = clients.findIndex(client => client.id === clientId);
+    const tieneTarjeta = tarjeta === 'si';
 
     if (clientIndex !== -1) {
-        // Mantener el mismo DNI del cliente existente
-        const existingDNI = clients[clientIndex].dni;
-
         // Actualizar los datos del cliente encontrado
         clients[clientIndex] = {
             id: clientId,
-            dni: existingDNI,  // Mantener el mismo DNI
+            dni, 
             nombre, 
             apellido, 
             imagen,
             valor: valorFloat,
-            tipo
+            tipo,
+            tarjeta: tieneTarjeta, // Agregar el campo 'tarjeta'
+            numeroTarjeta // Agregar el campo 'numeroTarjeta'
         };
 
         // Actualizar el archivo JSON con los datos actualizados

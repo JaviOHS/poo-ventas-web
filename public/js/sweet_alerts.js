@@ -27,6 +27,7 @@ async function validarFormulario(event) {
   const nombre = document.getElementById('nombre').value;
   const apellido = document.getElementById('apellido').value;
   const valor = document.getElementById('valor').value;
+  const numeroTarjeta = document.getElementById('numeroTarjeta').value;
 
   try {
     if (!Validaciones.esCedulaValida(dni)) {
@@ -118,7 +119,7 @@ function mostrarFormularioActualizacion(clientId) {
     })
     .then(clientData => {
       // Extraer los datos del cliente
-      const { nombre, apellido, imagen, valor, tipo, dni } = clientData; // Se agrega 'dni' aquí
+      const { nombre, apellido, imagen, valor, tipo, dni, tarjeta, numeroTarjeta } = clientData; // Se agrega 'dni', 'tarjeta' y 'numeroTarjeta' aquí
       // Mostrar el Sweet Alert con los datos actuales del cliente en los campos del formulario
       Swal.fire({
         title: 'Actualizar Cliente',
@@ -151,12 +152,62 @@ function mostrarFormularioActualizacion(clientId) {
               </select>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="form-label">Tarjeta:</label>
+              <select id="newTarjeta" class="form-select mb-3">
+                <option value="no" ${tarjeta === 'no' ? 'selected' : ''}>No</option>
+                <option value="si" ${tarjeta === 'si' ? 'selected' : ''}>Sí</option>
+              </select>
+            </div>
+            <div class="col-md-6" id="numeroTarjetaContainer" style="${tarjeta === 'si' ? 'display: block;' : 'display: none;'}">
+              <label class="form-label">Número de tarjeta:</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-credit-card"></i></span>
+                <input type="text" class="form-control" id="newNumeroTarjeta" maxlength="19">
+              </div>
+            </div>
+          </div>
         </div>
         `,
         focusConfirm: false,
         showCancelButton: true,
         confirmButtonText: 'Actualizar',
-        cancelButtonText: 'Cancelar'
+        cancelButtonText: 'Cancelar',
+        didOpen: () => {
+          // Configurar el evento change para el campo "Tarjeta"
+          document.getElementById('newTarjeta').addEventListener('change', function (e) {
+            const tarjetaSeleccionada = e.target.value;
+            const numeroTarjetaContainer = document.getElementById('numeroTarjetaContainer');
+            if (tarjetaSeleccionada === 'si') {
+              numeroTarjetaContainer.style.display = 'block';
+            } else {
+              numeroTarjetaContainer.style.display = 'none';
+            }
+          });
+        
+          // Configurar el evento input para el campo "Número de tarjeta"
+          document.getElementById('newNumeroTarjeta').addEventListener('input', function (e) {
+            var inputValue = e.target.value.replace(/\D/g, '').substring(0, 16); // Elimina cualquier caracter que no sea un dígito y limita la longitud a 16 dígitos
+            var newValue = '';
+            for (var i = 0; i < inputValue.length; i++) {
+              if (i % 4 === 0 && i > 0) {
+                newValue += '-'; // Agrega un espacio cada 4 dígitos para simular el formato de una tarjeta de crédito
+              }
+              newValue += inputValue[i];
+            }
+            e.target.value = newValue;
+          });
+        
+          // Obtener el valor inicial del campo "Tarjeta" y actualizar la visibilidad del campo "Número de tarjeta" según corresponda
+          const tarjetaSeleccionada = document.getElementById('newTarjeta').value;
+          const numeroTarjetaContainer = document.getElementById('numeroTarjetaContainer');
+          if (tarjetaSeleccionada === 'si') {
+            numeroTarjetaContainer.style.display = 'block';
+          } else {
+            numeroTarjetaContainer.style.display = 'none';
+          }
+        }
       }).then((result) => {
         if (result.isConfirmed) {
           const newNombre = document.getElementById('newNombre').value;
@@ -164,7 +215,8 @@ function mostrarFormularioActualizacion(clientId) {
           const newImagen = document.getElementById('newImagen').value;
           const newValor = document.getElementById('newValor').value;
           const newTipo = document.getElementById('newTipo').value;
-
+          const newTarjeta = document.getElementById('newTarjeta').value;
+          const newNumeroTarjeta = document.getElementById('newNumeroTarjeta').value;
           // Validar los nuevos datos
           if (!Validaciones.soloLetras(newNombre) || !Validaciones.soloLetras(newApellido)) {
             mostrarError('El formato del nombre o apellido es inválido. Por favor, inténtelo de nuevo.');
@@ -182,7 +234,9 @@ function mostrarFormularioActualizacion(clientId) {
                 apellido: newApellido,
                 imagen: newImagen,
                 valor: newValor,
-                tipo: newTipo
+                tipo: newTipo,
+                tarjeta: newTarjeta,
+                numeroTarjeta: newNumeroTarjeta
               })
             }).then(response => {
               // Verificar si la actualización fue exitosa
