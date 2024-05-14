@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path'); // Importa el módulo 'path' de Node.js
 const rutaArchivo = path.join(__dirname, '..', 'json', 'clients.json');
 const rutaArchivoProductos = path.join(__dirname, '..', 'json', 'products.json');
+const rutaArchivoVentas= path.join(__dirname, '..', 'json', 'sales.json');
 
 const uuid = require('uuid');
 const Validaciones = require('../public/js/validaciones');
@@ -39,6 +40,7 @@ router.get('/exit', (req, res) => {
 });
 
 // RUTAS DE MODULOS 
+// ----------------MODULO DE CLIENTES----------------
 router.get('/clients', (req, res) => {
   fs.readFile(rutaArchivo, 'utf-8', (err, data) => {
     if (err) {
@@ -56,14 +58,14 @@ router.get('/clients/create', (req, res) => {
 });
 
 router.post('/clients/create', async (req, res) => {
-    const { dni, nombre, apellido, imagen, valor, tipo, tarjeta, numeroTarjeta } = req.body;
+    const { dni, nombre, apellido, imagen, tipo, valor, tarjeta, numeroTarjeta } = req.body;
     const dniEnUso = await Validaciones.dniExistente(dni);
     
     if (dniEnUso) {
         return res.status(400).json({ error: 'El DNI ya está en uso.' });
     }
 
-    const valorFloat = parseFloat(valor);
+    let valorFloat = parseFloat(valor);
 
     // Convertir el valor de 'tarjeta' a booleano
     const tieneTarjeta = tarjeta === 'si';
@@ -76,7 +78,7 @@ router.post('/clients/create', async (req, res) => {
         imagen,
         valor: valorFloat,
         tipo,
-        tarjeta: tieneTarjeta, // Guardar como booleano
+        tarjeta: tieneTarjeta, 
         numeroTarjeta,
     };
     
@@ -92,7 +94,7 @@ router.get('/clients/update', (req, res) => {
 
 router.post('/clients/update/:id', (req, res) => {
     const clientId = req.params.id;
-    const {dni, nombre, apellido, imagen, valor, tipo, tarjeta, numeroTarjeta} = req.body; // Agregar 'tarjeta' y 'numeroTarjeta' aquí
+    const {dni, nombre, apellido, imagen, valor, tipo, tarjeta, numeroTarjeta} = req.body;
     const valorFloat = parseFloat(valor);
 
     // Buscar el cliente por su ID en el array 'clients'
@@ -129,9 +131,13 @@ router.get('/clients/consult', (req, res) => {
     res.render('clients/consult_clients', {clients});
 });
 
+router.get('/clients/consult/json', (req, res) => {
+    res.json(clients);
+});
+
 router.get('/clients/consult/:id', (req, res) => {
     const clientId = req.params.id;
-    
+
     // Buscar el cliente por su ID en el array 'clients'
     const client = clients.find(client => client.id === clientId);
 
@@ -172,8 +178,8 @@ router.get('/products/create', (req, res) => {
 
 
 router.post('/products/create', (req, res) => {
-    const { id, descripcion, precio, stock, imagen } = req.body;
-    if (!id || !descripcion || !precio || !stock) {
+    const {id, descripcion, precio, stock, imagen } = req.body;
+    if (!descripcion || !precio || !stock) {
         res.status(400).send('Faltan datos');
         return;
     }
@@ -183,10 +189,10 @@ router.post('/products/create', (req, res) => {
     const products = JSON.parse(json_products);
 
     const newProduct = {
-        id,
+        id: parseInt(id),
         descripcion,
-        precio,
-        stock,
+        precio: parseFloat(precio),
+        stock: parseInt(stock),
         imagen
     };
 
@@ -196,18 +202,12 @@ router.post('/products/create', (req, res) => {
     res.redirect('/products/create');
 });
 
-
-
-//----------------RUTA DE EDITAR PRODUCTOS----------------
-// Ruta para renderizar la página de actualización de productos
 router.get('/products/update', (req, res) => {
     const products = JSON.parse(fs.readFileSync(rutaArchivoProductos, 'utf-8'));
     res.render('products/update_products', { products });
 });
 
-// Ruta para actualizar un producto específico
 router.post('/products/update/:id', (req, res) => {
-    
     const productId = req.params.id;
     const { descripcion, precio, stock, imagen } = req.body;
 
@@ -215,12 +215,12 @@ router.post('/products/update/:id', (req, res) => {
     let products = JSON.parse(fs.readFileSync(rutaArchivoProductos, 'utf-8'));
 
     // Buscar el producto por su ID en el array 'products'
-    const productIndex = products.findIndex(product => product.id === productId);
+    const productIndex = products.findIndex(product => product.id === parseInt(productId));
 
     if (productIndex !== -1) {
       // Actualizar los datos del producto encontrado
       products[productIndex] = {
-        id: productId,
+        id: parseInt(productId),
         descripcion,
         precio: parseFloat(precio),
         stock: parseInt(stock),
@@ -239,10 +239,6 @@ router.post('/products/update/:id', (req, res) => {
     }
 });
 
-
-
-
-//----------------RUTA DE CONSULTAR PRODUCTOS----------------
 router.get('/products/consult', (req, res) => {
     // Leer el archivo JSON de productos
     const json_products = fs.readFileSync(rutaArchivoProductos, 'utf-8');
@@ -253,23 +249,22 @@ router.get('/products/consult', (req, res) => {
 
 router.get('/products/consult/:id', (req, res) => {
     const productId = req.params.id;
-    // Leer el archivo JSON de productos
-    const json_products = fs.readFileSync(rutaArchivoProductos, 'utf-8');
-    const products = JSON.parse(json_products);
-    // Buscar el producto por su ID en el array 'products'
-    const product = products.find(product => product.id === productId);
+
+    // Leer los datos del archivo JSON
+    const products = JSON.parse(fs.readFileSync(rutaArchivoProductos, 'utf-8'));
+
+    // Buscar el producto por su ID
+    const product = products.find(product => product.id === parseInt(productId));
+
     if (product) {
-        // Si se encuentra el producto, enviar sus datos como respuesta
-        res.status(200).json(product);
+        // Si se encuentra el producto, responder con los datos del producto
+        res.json(product);
     } else {
-        // Si no se encuentra el producto, responder con un error 404
+        // Si el producto no se encuentra, responder con un error 404
         res.status(404).json({ error: 'Producto no encontrado' });
     }
 });
-
-
-
-//----------------RUTA DE BORRAR PRODUCTOS----------------
+-
 router.get('/products/delet', (req, res) => {
     // Leer el archivo JSON de productos
     const json_products = fs.readFileSync(rutaArchivoProductos, 'utf-8');
@@ -295,33 +290,191 @@ router.get('/products/delete/:id', (req, res) => {
     res.redirect('/products/delet');
 });
 
-
-
 //----------------RUTA DE CREAR VENTAS----------------
 router.get('/sales/create', (req, res) => {
-    res.render('sales/create_sale');
+    const numberOfRows = 1; // Definir el número de filas deseado
+    res.render('sales/create_sale', { numberOfRows }); // Pasar numberOfRows a la plantilla
+});
+
+// Ruta para procesar la creación de una nueva venta
+router.post('/sales/create', (req, res) => {
+    const venta = req.body;
+    const rutaArchivoVentas = path.join(__dirname, '..', 'json', 'sales.json');
+
+    // Leer el archivo sales.json existente o crear uno nuevo si no existe
+    let ventas = [];
+    try {
+        const fileData = fs.readFileSync(rutaArchivoVentas, 'utf8');
+        ventas = JSON.parse(fileData);
+    } catch (err) {
+        // El archivo no existe, no hay problema
+    }
+
+    // Agregar el nombre del cliente al objeto venta
+    venta.cliente = req.body.cliente; // Esto asume que el nombre del cliente está presente en el cuerpo de la solicitud
+
+    // Agregar la nueva venta al array de ventas
+    ventas.push(venta);
+
+    // Escribir el array de ventas actualizado en el archivo sales.json
+    fs.writeFileSync(rutaArchivoVentas, JSON.stringify(ventas, null, 2));
+
+    // Solo envía una respuesta, ya sea una redirección o un mensaje JSON de confirmación
+    res.redirect('/sales/create');
 });
 
 
+// Ruta para obtener el número de factura más alto
+router.get('/sales/highestInvoiceNumber', (req, res) => {
 
-//----------------RUTA DE ACTUALIZAR VENTAS----------------
+    let ventas = [];
+    try {
+        const fileData = fs.readFileSync(rutaArchivoVentas, 'utf8');
+        ventas = JSON.parse(fileData);
+    } catch (err) {
+        // El archivo no existe o está vacío, no hay problema
+    }
+    // Obtener el número de factura más alto
+    const highestInvoiceNumber = ventas.reduce((max, venta) => Math.max(max, venta.factura), 0);
+    res.json({ highestInvoiceNumber });
+});
+
+// Agrega esta ruta para obtener el descuento del cliente por su número de cédula
+router.get('/clients/discount/:cedula', (req, res) => {
+    const { cedula } = req.params;
+    const clientsFilePath = path.join(__dirname, '..', 'json', 'clients.json');
+
+    fs.readFile(clientsFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error al leer el archivo de clientes:', err);
+            res.status(500).json({ error: 'Error interno del servidor' });
+            return;
+        }
+        try {
+            const clientes = JSON.parse(data);
+            const clienteEncontrado = clientes.find(cliente => cliente.dni === cedula);
+            if (clienteEncontrado) {
+                // Si se encuentra el cliente, enviar el descuento y el nombre del cliente
+                res.json({ descuento: clienteEncontrado.valor, cliente: `${clienteEncontrado.nombre} ${clienteEncontrado.apellido}` });
+            } else {
+                // Si no se encuentra el cliente, enviar un mensaje de error al cliente
+                res.status(404).json({ error: 'Cliente no encontrado' });
+            }
+        } catch (error) {
+            console.error('Error al analizar los datos del archivo de clientes:', error);
+            res.status(500).json({ error: 'Error interno del servidor' });
+        }
+    });
+});
+
+router.get('/json/products.json', (req, res) => {
+  fs.readFile(rutaArchivoProductos, 'utf-8', (err, data) => {
+    if (err) {
+      console.error('Error al leer el archivo JSON:', err);
+      res.status(500).json({ error: 'Error interno del servidor' });
+      return;
+    }
+    res.json(JSON.parse(data));
+  });
+});
+// Definir la función para cargar las ventas desde el archivo JSON
+function cargarVentas() {
+    try {
+        const fileData = fs.readFileSync(rutaArchivoVentas, 'utf8');
+        return JSON.parse(fileData);
+    } catch (err) {
+        console.error('Error al cargar los datos de ventas:', err);
+        return []; // Si hay un error al cargar el archivo, devuelve un arreglo vacío
+    }
+}
+
+// Cargar los datos de ventas en una variable global
+let sales = cargarVentas();
+
+// Definir las rutas
 router.get('/sales/update', (req, res) => {
-    res.render('sales/update_sale');
+    res.render('sales/update_sales', { sales });
 });
+
+
+router.post('/sales/update/:factura', (req, res) => {
+    const salesFactura = req.params.factura;
+    const { fecha, hora, cliente, subtotal, descuento, iva, total, detalle } = req.body;
+
+    // Buscar la venta por su número de factura en el array 'sales'
+    const saleIndex = sales.findIndex(sale => sale.factura === salesFactura);
+
+    if (saleIndex !== -1) {
+        // Actualizar los datos de la venta encontrada
+        sales[saleIndex] = {
+            factura: salesFactura,
+            fecha,
+            hora,
+            cliente,
+            subtotal: parseFloat(subtotal),
+            descuento: parseFloat(descuento),
+            iva: parseFloat(iva),
+            total: parseFloat(total),
+            detalle: detalle // Asegúrate de que 'detalle' contenga el nuevo detalle de la venta
+        };
+
+        // Actualizar el archivo JSON con los datos actualizados
+        const jsonSales = JSON.stringify(sales);
+        fs.writeFileSync(rutaArchivoVentas, jsonSales, 'utf-8');
+
+        // Responder con un mensaje de éxito
+        res.status(200).json({ message: 'Venta actualizada correctamente' });
+    } else {
+        // Si no se encuentra la venta, responder con un error 404
+        res.status(404).json({ error: 'Venta no encontrada' });
+    }
+});
+
+
+router.get('/sales/update_specific/:factura', (req, res) => {
+    const numberOfRows = 1;
+    const saleFactura = req.params.factura;
+    const sale = sales.find(sale => sale.factura === saleFactura);
+    if (!sale) {
+        // Si no se encuentra la venta, devolver un error o redirigir a una página de error
+        return res.status(404).send('Venta no encontrada');
+    }
+    res.render('sales/update_sales_specific', { clients, sale, numberOfRows });
+});
+
+
 
 
 //----------------RUTA DE CONSULTAR VENTAS----------------
 router.get('/sales/consult', (req, res) => {
-    res.render('sales/consult_sale');
+    // Leer el archivo JSON de productos
+    const json_sales = fs.readFileSync(rutaArchivoVentas, 'utf-8');
+    const sales = JSON.parse(json_sales);
+    // Renderizar la plantilla 'consult_products' y pasarle la variable 'products'
+    res.render('sales/consult_sales', { sales: sales });
 });
 
+router.get('/sales/consult/:factura', (req, res) => {
+    const salesFactura = req.params.factura;
+
+    // Leer los datos del archivo JSON
+    const sales = JSON.parse(fs.readFileSync(rutaArchivoVentas, 'utf-8'));
+
+    // Buscar el producto por su ID
+    const sale = sales.find(sale => sale.factura === parseInt(salesFactura));
+
+    if (sale) {
+        // Si se encuentra el producto, responder con los datos del producto
+        res.json(sale);
+    } else {
+        // Si el producto no se encuentra, responder con un error 404
+        res.status(404).json({ error: 'factura no encontrada' });
+    }
+});
 
 //----------------RUTA DE BORRAR VENTAS----------------
 router.get('/sales/delete', (req, res) => {
     res.render('sales/delete_sale');
 });
-
-
-
 
 module.exports = router;

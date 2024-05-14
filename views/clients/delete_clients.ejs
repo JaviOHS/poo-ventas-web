@@ -41,6 +41,12 @@
                   <p class="card-text text-center"><%= client.dni %>  </p>
                   <h3>VALOR: </h3>
                   <p class="card-text text-center"><%= client.valor %></p>
+                  <h3>TARJETA:</h3>
+                  <% if (client.tarjeta) { %>
+                    <p class="card-text text-center"><%= client.numeroTarjeta %></p>
+                  <% } else { %>
+                    <p class="card-text text-center">Sin tarjeta</p>
+                  <% } %>
                   <h3>TIPO DE CIENTE: </h3>
                   <p class="card-text text-center"><%= client.tipo %></p>
                   <button class="btn delete-button" onclick="confirmarEliminacion('<%= client.id %>')"><i class="fas fa-trash"></i> Eliminar</button>

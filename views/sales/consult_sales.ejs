@@ -1,0 +1,61 @@
+<head>
+  <%- include('../partials/head') %>
+  <title>SGV | Consultar Ventas</title>
+</head>
+<body>
+  <!-- Navbar -->
+  <%- include('../partials/navbar') %>
+
+  <!-- Contenido -->
+  <section id="services" class="services">
+    <div class="container">
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="section-title" data-aos="fade-up">
+        <h2>CONSULTAR INFORMACION DE VENTAS</h2>
+        <br>
+        <p>Consulte informacion de ventas.</p>
+      </div>
+      <div class="container p-4">
+        <div class="row">
+          <% sales.forEach(function (sale) { %>
+          <div class="col-md-4">
+            <div class="card mb-3">
+              <div class="card-header">
+                <h3 class="card-text text-center">FACTURA: <%= sale.factura %></h3>
+              </div>
+              <div class="card-body">
+                <h3 class="card-text text-center">CLIENTE:</h3>
+                <p class="card-text text-center"><%= sale.cliente %></p>
+                <h3 class="card-text text-center">FECHA:</h3>
+                <p class="card-text text-center"><%= sale.fecha %></p>
+                <h3 class="card-text text-center">HORA:</h3>
+                <p class="card-text text-center"><%= sale.hora %></p>
+                <h3 class="card-text text-center">TOTAL:</h3>
+                <p class="card-text text-center"><%= sale.total %></p>
+              </div>
+              <div class="card-footer">
+                <h3 class="card-text text-center">DETALLE:</h3>
+                <% sale.detalle.forEach(function (item) { %>
+                  <p class="card-text text-center"><strong>Producto:</strong> <%= item.producto %><br><strong>Precio:</strong> <%= item.precio %><br><strong>Cantidad:</strong> <%= item.cantidad %></p>
+                
+                <% }) %>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+      <div class="text-center">
+        <a href="/gestion_ventas" class="btn btn-primary"><i class="fas fa-home"></i> Regresar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+  <%- include('../partials/footer') %>
+</body>
+</html>

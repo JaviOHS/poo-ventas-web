@@ -47,17 +47,17 @@
           <div class="row">
             <div class="col-md-6">
               <div class="mb-3">
-                <label for="valor" class="form-label">Valor:</label>
-                <input type="number" class="form-control" id="valor" name="valor" required>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="mb-3">
                 <label for="tipo" class="form-label">Tipo:</label>
                 <select class="form-select" id="tipo" name="tipo">
                   <option value="Regular">Regular</option>
                   <option value="VIP">VIP</option>
                 </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="valor" class="form-label">Aplica para un descuento de:</label>
+                <input type="text" step="0.01" class="form-control" id="valor" name="valor" value='0'>
               </div>
             </div>
           </div>
@@ -72,6 +72,7 @@
                 </select>
               </div>
             </div>
+               
             <div class="col-md-6" id="numeroTarjetaContainer" style="display: none;">
               <div class="mb-3">
                   <label for="numeroTarjeta" class="form-label">Número de tarjeta:</label>
@@ -95,12 +96,30 @@
     </div>
   </section>
   <script>
+    // Obtener referencias a los elementos del formulario
+    const tipoCliente = document.getElementById('tipo');
+    const tipoTarjeta = document.getElementById('tarjeta');
+    const descuento = document.getElementById('valor');
+    const numeroTarjetaContainer = document.getElementById('numeroTarjetaContainer');
+
+    // Manejar el evento de cambio en el tipo de tarjeta
+    tipoTarjeta.addEventListener('change', function () {
+        // Obtener el valor seleccionado para el tipo de tarjeta
+        const tarjetaSeleccionada = tipoTarjeta.value;
+        if (tarjetaSeleccionada === 'si') {
+            descuento.value = "0.10"; // Establecer el valor de descuento si se selecciona "Sí"
+        } else {
+            descuento.value = "0"; // Restablecer el valor de descuento si se selecciona "No"
+        }
+    });
+  </script>
+  <script>
     document.getElementById('numeroTarjeta').addEventListener('input', function (e) {
         var inputValue = e.target.value.replace(/\D/g, '').substring(0, 16); // Elimina cualquier caracter que no sea un dígito y limita la longitud a 16 dígitos
         var newValue = '';
         for (var i = 0; i < inputValue.length; i++) {
             if (i % 4 === 0 && i > 0) {
-                newValue += ' '; // Agrega un espacio cada 4 dígitos para simular el formato de una tarjeta de crédito
+                newValue += '-'; // Agrega un espacio cada 4 dígitos para simular el formato de una tarjeta de crédito
             }
             newValue += inputValue[i];
         }

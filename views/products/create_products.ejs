@@ -19,39 +19,36 @@
         </div>
         <form id="form" class="card card-body bg-light p-4 rounded" method="POST" action="/products/create" onsubmit="validarFormularioProductos(event)">
           <fieldset>
-              <div class="row mb-3">
-                  <div class="col-md-6">
-                      <label for="id" class="form-label">ID del producto:</label>
-                      <input type="number" class="form-control" id="id" name="id" required>
-                  </div>
-                  <div class="col-md-6">
-                      <label for="descripcion" class="form-label">Descripción del producto:</label>
-                      <input type="text" class="form-control" id="descripcion" name="descripcion" required>
-                  </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                  <label for="id" class="form-label">ID del producto:</label>
+                  <input type="number" class="form-control" id="id" name="id" required>
               </div>
-      
-              <div class="row mb-3">
-                  <div class="col-md-6">
-                      <label for="stock" class="form-label">Stock de producto en bodega:</label>
-                      <input type="number" class="form-control" id="stock" name="stock" required>
-                  </div>
-                  <div class="col-md-6">
-                      <label for="precio" class="form-label">Precio del producto:</label>
-                      <div class="input-group">
-                          <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i></span>
-                          <input type="text" class="form-control" id="precio" name="precio" required step="0.01">
-                      </div>
-                  </div>
+              <div class="col-md-6">
+                  <label for="descripcion" class="form-label">Descripción del producto:</label>
+                  <input type="text" class="form-control" id="descripcion" name="descripcion" required>
               </div>
-      
-              <div class="mb-3">
-                  <label for="imagen" class="form-label">URL Imagen del producto referencial:</label>
-                  <input type="text" class="form-control" id="imagen" name="imagen">
-              </div>
-      
-              <div class="text-center">
-                  <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar cambios</button>
-              </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="stock" class="form-label">Stock de producto en bodega:</label>
+                    <input type="number" class="form-control" id="stock" name="stock" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="precio" class="form-label">Precio del producto:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i></span>
+                        <input type="text" class="form-control" id="precio" name="precio" required step="0.01">
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="imagen" class="form-label">URL Imagen del producto referencial:</label>
+                <input type="text" class="form-control" id="imagen" name="imagen">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar cambios</button>
+            </div>
           </fieldset>
         </form>
         <div class="text-center">

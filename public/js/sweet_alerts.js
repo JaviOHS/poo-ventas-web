@@ -36,8 +36,6 @@ async function validarFormulario(event) {
       mostrarError('El DNI ya está registrado. Por favor, inténtelo de nuevo.');
     } else if (!Validaciones.soloLetras(nombre) || !Validaciones.soloLetras(apellido)) {
       mostrarError('El formato del nombre o apellido es inválido. Por favor, inténtelo de nuevo.');
-    } else if (!Validaciones.soloNumeros(valor)) {
-      mostrarError('El formato del valor es inválido. Por favor, inténtelo de nuevo.');
     } else {
       Swal.fire({
         title: '¡Cliente agregado!',
@@ -124,52 +122,52 @@ function mostrarFormularioActualizacion(clientId) {
       Swal.fire({
         title: 'Actualizar Cliente',
         html: `
-          <div class="card card-body" style="overflow-x: hidden;">
-          <label class="form-label">DNI:</label>
-          <input id="dni" class="form-control mb-3" value="${dni}" disabled>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="form-label">Nombre:</label>
-              <input id="newNombre" class="form-control mb-3" placeholder="Nuevo Nombre" value="${nombre}">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Apellido:</label>
-              <input id="newApellido" class="form-control mb-3" placeholder="Nuevo Apellido" value="${apellido}">
-            </div>
+      <div class="card card-body" style="overflow-x: hidden;">
+        <label class="form-label">DNI:</label>
+        <input id="dni" class="form-control mb-3" value="${dni}" disabled>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label">Nombre:</label>
+            <input id="newNombre" class="form-control mb-3" placeholder="Nuevo Nombre" value="${nombre}">
           </div>
-          <label class="form-label">Imagen:</label>
-          <input id="newImagen" class="form-control mb-3" placeholder="Nueva Imagen" value="${imagen}">
-          <div class="row">
-            <div class="col-md-6">
-              <label class="form-label">Valor:</label>
-              <input id="newValor" class="form-control mb-3" placeholder="Nuevo Valor" value="${valor}">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label">Tipo:</label>
-              <select id="newTipo" class="form-select mb-3">
-                <option value="Regular" ${tipo === 'Regular' ? 'selected' : ''}>Regular</option>
-                <option value="VIP" ${tipo === 'VIP' ? 'selected' : ''}>VIP</option>
-              </select>
-            </div>
+          <div class="col-md-6">
+            <label class="form-label">Apellido:</label>
+            <input id="newApellido" class="form-control mb-3" placeholder="Nuevo Apellido" value="${apellido}">
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label class="form-label">Tarjeta:</label>
-              <select id="newTarjeta" class="form-select mb-3">
-                <option value="no" ${tarjeta === 'no' ? 'selected' : ''}>No</option>
-                <option value="si" ${tarjeta === 'si' ? 'selected' : ''}>Sí</option>
-              </select>
-            </div>
-            <div class="col-md-6" id="numeroTarjetaContainer" style="${tarjeta === 'si' ? 'display: block;' : 'display: none;'}">
-              <label class="form-label">Número de tarjeta:</label>
-              <div class="input-group">
-                <span class="input-group-text"><i class="fa-solid fa-credit-card"></i></span>
-                <input type="text" class="form-control" id="newNumeroTarjeta" maxlength="19">
-              </div>
+        </div>
+        <label class="form-label">Imagen:</label>
+        <input id="newImagen" class="form-control mb-3" placeholder="Nueva Imagen" value="${imagen}">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label">Descuento:</label>
+            <input id="newValor" class="form-control mb-3" placeholder="Nuevo Valor" value="${tarjeta === 'si' ? '0.10' : ''}" ${tarjeta === 'si' ? 'disabled' : ''}>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Tipo:</label>
+            <select id="newTipo" class="form-select mb-3">
+              <option value="Regular" ${tipo === 'Regular' ? 'selected' : ''}>Regular</option>
+              <option value="VIP" ${tipo === 'VIP' ? 'selected' : ''}>VIP</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label">Tarjeta:</label >
+            <select id="newTarjeta" class="form-select mb-3">
+              <option value="no" ${tarjeta === 'no' ? 'selected' : ''}>No</option>
+              <option value="si" ${tarjeta === 'si' ? 'selected' : ''}>Sí</option>
+            </select>
+          </div>
+          <div class="col-md-6" id="numeroTarjetaContainer" style="${tarjeta === 'si' ? 'display: block;' : 'display: none;'}">
+            <label class="form-label">Número de tarjeta:</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-credit-card"></i></span>
+              <input type="text" class="form-control" id="newNumeroTarjeta" maxlength="19">
             </div>
           </div>
         </div>
-        `,
+      </div>
+      `,
         focusConfirm: false,
         showCancelButton: true,
         confirmButtonText: 'Actualizar',
@@ -178,10 +176,14 @@ function mostrarFormularioActualizacion(clientId) {
           // Configurar el evento change para el campo "Tarjeta"
           document.getElementById('newTarjeta').addEventListener('change', function (e) {
             const tarjetaSeleccionada = e.target.value;
+            const descuentoInput = document.getElementById('newValor');
             const numeroTarjetaContainer = document.getElementById('numeroTarjetaContainer');
             if (tarjetaSeleccionada === 'si') {
+              descuentoInput.value = '0.10';
               numeroTarjetaContainer.style.display = 'block';
             } else {
+              descuentoInput.value = '0';
+              descuentoInput.removeAttribute('disabled'); // Habilitar el campo de descuento si se selecciona "No"
               numeroTarjetaContainer.style.display = 'none';
             }
           });
@@ -210,18 +212,17 @@ function mostrarFormularioActualizacion(clientId) {
         }
       }).then((result) => {
         if (result.isConfirmed) {
+          const dni = document.getElementById('dni').value;
           const newNombre = document.getElementById('newNombre').value;
           const newApellido = document.getElementById('newApellido').value;
           const newImagen = document.getElementById('newImagen').value;
-          const newValor = document.getElementById('newValor').value;
           const newTipo = document.getElementById('newTipo').value;
+          const newValor = document.getElementById('newValor').value;
           const newTarjeta = document.getElementById('newTarjeta').value;
           const newNumeroTarjeta = document.getElementById('newNumeroTarjeta').value;
           // Validar los nuevos datos
           if (!Validaciones.soloLetras(newNombre) || !Validaciones.soloLetras(newApellido)) {
             mostrarError('El formato del nombre o apellido es inválido. Por favor, inténtelo de nuevo.');
-          } else if (!Validaciones.soloNumeros(newValor)) {
-            mostrarError('El formato del valor es inválido. Por favor, inténtelo de nuevo.');
           } else {
             // Realizar la solicitud al servidor para actualizar el cliente
             fetch(`/clients/update/${clientId}`, {
@@ -230,6 +231,7 @@ function mostrarFormularioActualizacion(clientId) {
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
+                dni,
                 nombre: newNombre,
                 apellido: newApellido,
                 imagen: newImagen,
@@ -269,17 +271,16 @@ function mostrarFormularioActualizacion(clientId) {
 async function validarFormularioProductos(event) {
   event.preventDefault(); // Detiene el envío del formulario
   const id = document.getElementById('id').value;
-  const descripcion = document.getElementById('descripcion').value;
   const precio = document.getElementById('precio').value;
   const stock = document.getElementById('stock').value;
 
   try {
-    if (!Validaciones.soloNumeros(id)) {
-      mostrarError('La ID debe ser un número entero positivo. Por favor, inténtelo de nuevo.');
-    } else if (!Validaciones.soloDecimales(precio)) {
+    if (!Validaciones.soloDecimales(precio)) {
       mostrarError('El precio debe ser un número entero o decimal. Por favor, inténtelo de nuevo.');
     } else if (!Validaciones.soloNumeros(stock)) {
       mostrarError('La cantidad debe ser un número entero y positivo. Por favor, inténtelo de nuevo.');
+    } else if (!Validaciones.soloNumeros(id)) {
+      mostrarError('El ID debe ser un número entero y positivo. Por favor, inténtelo de nuevo.');
     } else {
       Swal.fire({
         title: 'Producto agregado!',
@@ -359,6 +360,7 @@ function mostrarFormularioActualizacionProductos(productId) {
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
+                id: id,
                 descripcion: newDescripcion,
                 precio: newPrecio,
                 stock: newStock,
@@ -416,7 +418,7 @@ function confirmarEliminacionProducto(productId) {
                       confirmButtonText: 'Aceptar'
                   }).then((result) => {
                       if (result.isConfirmed) {
-                          location.reload(); // Recargar la página
+                        window.location.href = '/sales/consult';
                       }
                   });
               } else {

@@ -39,8 +39,14 @@
                   <div class="card-footer">
                     <h3>DNI: </h3>
                     <p class="card-text text-center"><%= client.dni %>  </p>
-                    <h3>VALOR: </h3>
+                    <h3>DESCUENTO: </h3>
                     <p class="card-text text-center"><%= client.valor %></p>
+                    <h3>TARJETA:</h3>
+                    <% if (client.tarjeta) { %>
+                      <p class="card-text text-center"><%= client.numeroTarjeta %></p>
+                    <% } else { %>
+                      <p class="card-text text-center">Sin tarjeta</p>
+                    <% } %>
                     <h3>TIPO DE CLIENTE: </h3>
                     <p class="card-text text-center"><%= client.tipo %></p>
                   </div>
