@@ -8,6 +8,8 @@ class UpdateSales {
     this.calcularTotal();
     this.update = this.update.bind(this);
     setInterval(() => this.actualizarFechaYHora(), 1000);
+    const cantidadInput = document.querySelector('input[name="cantidad"]');
+    cantidadInput.addEventListener('input', (event) => this.validarCantidad(event));
   }
 
   init() {
@@ -250,8 +252,14 @@ class UpdateSales {
         // Mostrar un mensaje de error al usuario o realizar otra acción si no se encuentra el cliente
       });
   }
-}
 
+  validarCantidad(event) {
+    const input = event.target;
+    if (!Validaciones.soloNumeros(input.value)) {
+      input.value = input.value.replace(/[^\d]/g, ''); // Eliminar cualquier caracter que no sea un número
+    }
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const updateSales = new UpdateSales();

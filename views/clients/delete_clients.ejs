@@ -26,33 +26,33 @@
             </div>
           <% } else { %>
             <% clients.forEach(function (client) { %>
-            <div class="col-md-4">
-              <div class="card mb-3">
-                <div class="card-header-delete">
-                  <div class="avatar-delete">
-                    <img src="<%= client.imagen || 'https://cdn-icons-png.flaticon.com/512/12267/12267913.png' %>" alt="Avatar">
+              <div class="col-md-4">
+                <div class="card mb-3">
+                  <div class="card-header-delete">
+                    <div class="avatar-delete">
+                      <img src="<%= client.imagen || 'https://cdn-icons-png.flaticon.com/512/12267/12267913.png' %>" alt="Avatar">
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h2 class="card-title text-center"><%= client.nombre %> <%= client.apellido %></h2>
+                  </div>
+                  <div class="card-footer">
+                    <p class="card-text text-center"><strong>DNI: </strong><br><%= client.dni %><hr></p>
+                    <% if (client.valor) { %>
+                      <p class="card-text text-center"><strong>DESCUENTO: </strong><br><%= client.valor %><hr></p>
+                    <% } else { %>
+                      <p class="card-text text-center"><strong>DESCUENTO: </strong><br>No se le aplica un descuento al cliente.<hr></p>
+                    <% } %>
+                    <% if (client.tarjeta) { %>
+                      <p class="card-text text-center"><strong>TARJETA: </strong><br><%= client.numeroTarjeta %><hr></p>
+                    <% } else { %>
+                      <p class="card-text text-center"><strong>TARJETA: </strong><br>El cliente no tiene tarjeta<hr></p>
+                    <% } %>
+                    <p class="card-text text-center"><strong>TIPO DE CLIENTE: </strong><br><%= client.tipo %><hr></p>
+                    <button class="btn delete-button" onclick="confirmarEliminacion('<%= client.id %>')"><i class="fas fa-trash"></i> Eliminar</button><hr>
                   </div>
                 </div>
-                <div class="card-body">
-                  <h2 class="card-title text-center"><%= client.nombre %> <%= client.apellido %></h2>
-                </div>
-                <div class="card-footer">
-                  <h3>DNI: </h3>
-                  <p class="card-text text-center"><%= client.dni %>  </p>
-                  <h3>VALOR: </h3>
-                  <p class="card-text text-center"><%= client.valor %></p>
-                  <h3>TARJETA:</h3>
-                  <% if (client.tarjeta) { %>
-                    <p class="card-text text-center"><%= client.numeroTarjeta %></p>
-                  <% } else { %>
-                    <p class="card-text text-center">Sin tarjeta</p>
-                  <% } %>
-                  <h3>TIPO DE CIENTE: </h3>
-                  <p class="card-text text-center"><%= client.tipo %></p>
-                  <button class="btn delete-button" onclick="confirmarEliminacion('<%= client.id %>')"><i class="fas fa-trash"></i> Eliminar</button>
-                </div>
               </div>
-            </div>
             <% }) %>
           <% } %>
         </div>

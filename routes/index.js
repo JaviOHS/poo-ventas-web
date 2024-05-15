@@ -53,6 +53,7 @@ router.get('/clients', (req, res) => {
   });
 });
 
+//---------------- CREAR CLIENTES ----------------
 router.get('/clients/create', (req, res) => {
     res.render('clients/create_clients');
 });
@@ -88,6 +89,7 @@ router.post('/clients/create', async (req, res) => {
     res.redirect('/clients/create');
 });
 
+//---------------- ACTUALIZAR CLIENTES ----------------
 router.get('/clients/update', (req, res) => {
     res.render('clients/update_clients', {clients});
 });
@@ -127,6 +129,7 @@ router.post('/clients/update/:id', (req, res) => {
     }
 });
 
+//---------------- CONSULTAR CLIENTES ----------------
 router.get('/clients/consult', (req, res) => {
     res.render('clients/consult_clients', {clients});
 });
@@ -150,7 +153,45 @@ router.get('/clients/consult/:id', (req, res) => {
     }
 });
 
+//---------------- CONSULTAR CLIENTES: MAS INFORMACION ----------------
+router.get('/clients/get_information_sales/:clientId', (req, res) => {
+    const clientId = req.params.clientId;
 
+    // Leer los datos del archivo JSON de ventas
+    const sales = JSON.parse(fs.readFileSync(rutaArchivoVentas, 'utf-8'));
+
+    // Filtrar las ventas para obtener solo las ventas asociadas al cliente seleccionado
+    const clientSales = sales.filter(sale => {
+        // Comparar el nombre completo del cliente almacenado en el archivo sales.json con el clientId (nombre y apellido)
+        return sale.cliente === clientId;
+    });
+
+    // Verificar si se encontraron ventas para el cliente seleccionado
+    if (clientSales.length > 0) {
+        // Calcular la suma total de facturas por cliente
+        const sumaTotalFacturas = clientSales.reduce((total, sale) => total + sale.total, 0);
+
+        // Encontrar la factura más costosa con sus datos
+        const facturaMaxima = clientSales.reduce((max, sale) => sale.total > max.total ? sale : max, clientSales[0]);
+
+        // Encontrar la factura menos costosa con sus datos
+        const facturaMinima = clientSales.reduce((min, sale) => sale.total < min.total ? sale : min, clientSales[0]);
+
+        // Responder con la información de ventas del cliente y los datos adicionales
+        res.status(200).json({
+            clientSales: clientSales,
+            totalFacturas: clientSales.length,
+            sumaTotalFacturas: sumaTotalFacturas,
+            facturaMaxima: facturaMaxima,
+            facturaMinima: facturaMinima
+        });
+    } else {
+        // Si no se encontraron ventas, responder con un mensaje indicando que el cliente no tiene compras
+        res.status(200).json({ message: 'El cliente no tiene compras' });
+    }
+});
+
+//---------------- ELIMINAR CLIENTES ----------------
 router.get('/clients/delete', (req, res) => {
     res.render('clients/delete_clients', {clients});
 });
@@ -169,9 +210,7 @@ router.get('/clients/delete/:id', (req, res) => {
     res.redirect('/');
 });
 
-
-
-//----------------RUTA DE CREAR PRODUCTOS----------------
+//---------------- CREAR PRODUCTOS----------------
 router.get('/products/create', (req, res) => {
     // Lee los productos del archivo JSON
     const json_products = fs.readFileSync(rutaArchivoProductos, 'utf-8');
@@ -184,8 +223,6 @@ router.get('/products/create', (req, res) => {
     // Renderizar la vista y pasar el nuevo ID y los productos como contexto
     res.render('products/create_products', { newId, products });
 });
-
-
 
 router.post('/products/create', async (req, res) => {
     let { id, descripcion, precio, stock, imagen } = req.body;
@@ -223,6 +260,7 @@ router.post('/products/create', async (req, res) => {
     res.redirect(`/products/create?id=${newId}`);
 });
 
+//---------------- ACTUALIZAR PRODUCTOS----------------
 router.get('/products/update', (req, res) => {
     const products = JSON.parse(fs.readFileSync(rutaArchivoProductos, 'utf-8'));
     res.render('products/update_products', { products });
@@ -260,6 +298,7 @@ router.post('/products/update/:id', (req, res) => {
     }
 });
 
+//---------------- CONSULTAR PRODUCTOS----------------
 router.get('/products/consult', (req, res) => {
     // Leer el archivo JSON de productos
     const json_products = fs.readFileSync(rutaArchivoProductos, 'utf-8');
@@ -285,7 +324,8 @@ router.get('/products/consult/:id', (req, res) => {
         res.status(404).json({ error: 'Producto no encontrado' });
     }
 });
--
+
+//---------------- ELIMINAR PRODUCTOS----------------
 router.get('/products/delet', (req, res) => {
     // Leer el archivo JSON de productos
     const json_products = fs.readFileSync(rutaArchivoProductos, 'utf-8');
@@ -311,7 +351,7 @@ router.get('/products/delete/:id', (req, res) => {
     res.redirect('/products/delet');
 });
 
-//----------------RUTA DE CREAR VENTAS----------------
+//---------------- CREAR VENTAS----------------
 router.get('/sales/create', (req, res) => {
     const numberOfRows = 1; // Definir el número de filas deseado
     res.render('sales/create_sale', { numberOfRows }); // Pasar numberOfRows a la plantilla
@@ -398,6 +438,7 @@ router.get('/json/products.json', (req, res) => {
     res.json(JSON.parse(data));
   });
 });
+
 // Definir la función para cargar las ventas desde el archivo JSON
 function cargarVentas() {
     try {
@@ -412,11 +453,10 @@ function cargarVentas() {
 // Cargar los datos de ventas en una variable global
 let sales = cargarVentas();
 
-// Definir las rutas
+//---------------- ACTUALIZAR VENTAS----------------
 router.get('/sales/update', (req, res) => {
     res.render('sales/update_sales', { sales });
 });
-
 
 router.post('/sales/update/:factura', (req, res) => {
     const salesFactura = req.params.factura;
@@ -451,7 +491,6 @@ router.post('/sales/update/:factura', (req, res) => {
     }
 });
 
-
 router.get('/sales/update_specific/:factura', (req, res) => {
     const numberOfRows = 1;
     const saleFactura = req.params.factura;
@@ -463,10 +502,7 @@ router.get('/sales/update_specific/:factura', (req, res) => {
     res.render('sales/update_sales_specific', { clients, sale, numberOfRows });
 });
 
-
-
-
-//----------------RUTA DE CONSULTAR VENTAS----------------
+//---------------- CONSULTAR VENTAS----------------
 router.get('/sales/consult', (req, res) => {
     // Leer el archivo JSON de productos
     const json_sales = fs.readFileSync(rutaArchivoVentas, 'utf-8');

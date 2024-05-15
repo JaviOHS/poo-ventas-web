@@ -8,6 +8,8 @@ class Sale {
     this.calcularTotal();
     this.obtenerNumeroFactura();
     setInterval(() => this.actualizarFechaYHora(), 1000); // Actualizar la fecha y hora cada segundo
+    const cantidadInput = document.querySelector('input[name="cantidad"]');
+    cantidadInput.addEventListener('input', (event) => this.validarCantidad(event));
   }
 
   init() {
@@ -261,6 +263,12 @@ class Sale {
         document.getElementById('descuento').removeAttribute('readonly');
         document.getElementById('cliente').value = ''; // Limpiar el campo de cliente
       });
+    }
+    validarCantidad(event) {
+      const input = event.target;
+      if (!Validaciones.soloNumeros(input.value)) {
+        input.value = input.value.replace(/[^\d]/g, ''); // Eliminar cualquier caracter que no sea un número
+      }
     }
 }
 

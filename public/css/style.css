@@ -574,3 +574,38 @@ h4 {
 label{
   font-weight: bold;
 }
+
+hr {
+  border: 0; /* Elimina el borde predeterminado */
+  height: 1px; /* Establece la altura de la línea */
+  background-color: #ccc; /* Color de fondo de la línea */
+  margin: 20px 0; /* Espacio vertical alrededor de la línea */
+}
+
+.spinner {
+  width: 200px;
+  height: 200px;
+  background: #3498db;
+  border-radius: 50%;
+  overflow: hidden;
+  animation: spin 6s linear infinite;
+}
+
+.pedro-pedro {
+  display: block;
+  width: 100%;
+  animation: bounce 0.2s linear infinite alternate;
+  
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(-1turn);
+  }
+}
+
+@keyframes bounce {
+  to {
+    translate: 0 20px;
+  }
+}

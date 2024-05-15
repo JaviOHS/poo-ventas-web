@@ -432,3 +432,47 @@ function confirmarEliminacionProducto(productId) {
       }
   });
 }
+
+function mostrarInformacion(nombreCompleto) {
+  // Realizar una solicitud GET al servidor para obtener la información de ventas del cliente
+  fetch(`/clients/get_information_sales/${nombreCompleto}`)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('No se pudo obtener la información de ventas del cliente');
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log('Información de ventas del cliente:', data);
+          if (data.clientSales.length === 0) {
+              Swal.fire({
+                  title: 'Información de ventas',
+                  text: 'El cliente no tiene compras',
+                  icon: 'warning',
+                  confirmButtonText: 'Aceptar'
+              });
+          } else {
+              Swal.fire({
+                  title: 'INFORMACIÓN ADICIONAL',
+                  html: `
+                      <p><strong>Total de facturas:</strong> <br>${data.totalFacturas}</p>
+                      <p><strong>Suma total de facturas:</strong> <br>${data.sumaTotalFacturas}</p>
+                      <p><strong>Factura más costosa:</strong> <br><strong>Factura:</strong> ${data.facturaMaxima.factura}<br><strong>Fecha:</strong> ${data.facturaMaxima.fecha} ${data.facturaMaxima.hora}<br><strong>Detalles:</strong><br> ${data.facturaMaxima.detalle.map(producto => `${producto.producto} - ${producto.cantidad} - ${producto.precio}`).join('<br>')}<br><strong>Total:</strong> ${data.facturaMaxima.total}</p>
+                      <p><strong>Factura menos costosa:</strong> <br><strong>Factura:</strong> ${data.facturaMinima.factura}<br><strong>Fecha:</strong> ${data.facturaMinima.fecha} ${data.facturaMinima.hora}<br><strong>Detalles:</strong><br> ${data.facturaMinima.detalle.map(producto => `${producto.producto} - ${producto.cantidad} - ${producto.precio}`).join('<br>')}<br><strong>Total:</strong> ${data.facturaMinima.total}</p>
+                  `,
+                  confirmButtonText: 'Aceptar'
+              });
+          }
+      })
+      .catch(error => {
+          // Manejar errores en caso de que la solicitud al servidor falle
+          console.error('Error al obtener la información de ventas del cliente:', error);
+          Swal.fire({
+              title: 'Error',
+              text: 'No se pudo obtener la información de ventas del cliente',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+          });
+      });
+}
+

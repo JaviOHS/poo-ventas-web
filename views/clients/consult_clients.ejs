@@ -37,18 +37,19 @@
                     <h2 class="card-title text-center"><%= client.nombre %> <%= client.apellido %></h2>
                   </div>
                   <div class="card-footer">
-                    <h3>DNI: </h3>
-                    <p class="card-text text-center"><%= client.dni %>  </p>
-                    <h3>DESCUENTO: </h3>
-                    <p class="card-text text-center"><%= client.valor %></p>
-                    <h3>TARJETA:</h3>
-                    <% if (client.tarjeta) { %>
-                      <p class="card-text text-center"><%= client.numeroTarjeta %></p>
+                    <p class="card-text text-center"><strong>DNI: </strong><br><%= client.dni %><hr></p>
+                    <% if (client.valor) { %>
+                      <p class="card-text text-center"><strong>DESCUENTO: </strong><br><%= client.valor %><hr></p>
                     <% } else { %>
-                      <p class="card-text text-center">Sin tarjeta</p>
+                      <p class="card-text text-center"><strong>DESCUENTO: </strong><br>No se le aplica un descuento al cliente.<hr></p>
                     <% } %>
-                    <h3>TIPO DE CLIENTE: </h3>
-                    <p class="card-text text-center"><%= client.tipo %></p>
+                    <% if (client.tarjeta) { %>
+                      <p class="card-text text-center"><strong>TARJETA: </strong><br><%= client.numeroTarjeta %><hr></p>
+                    <% } else { %>
+                      <p class="card-text text-center"><strong>TARJETA: </strong><br>El cliente no tiene tarjeta<hr></p>
+                    <% } %>
+                    <p class="card-text text-center"><strong>TIPO DE CLIENTE: </strong><br><%= client.tipo %></p><hr>
+                    <button class="btn btn-primary" onclick="mostrarInformacion('<%= client.nombre %> <%= client.apellido %>')"><i class="fa-solid fa-magnifying-glass fa-fade"></i> Más información</button><hr>
                   </div>
                 </div>
               </div>
@@ -60,9 +61,7 @@
         <a href="/gestion_clientes" class="btn btn-primary"><i class="fas fa-home"></i> Regresar</a>
       </div>
     </div>
-</section>
-
-  <!-- Scripts -->
+  </section>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
   <%- include('../partials/footer') %>
 </body>
