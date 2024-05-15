@@ -16,34 +16,44 @@
         <br>
         <p>Ingrese los datos para registrar un nuevo cliente.</p>
       </div>
-      <form id="form" class="card card-body" method="POST" action="/clients/create" onsubmit="validarFormulario(event)">
+      <form id="form" class="card card-body bg-light p-4 rounded" method="POST" action="/clients/create" onsubmit="validarFormulario(event)">
         <fieldset>
           <div class="row">
             <div class="col-md-4">
               <div class="mb-3">
                 <label for="dni" class="form-label">DNI:</label>
-                <input type="text" class="form-control" id="dni" name="dni" required>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
+                  <input type="text" class="form-control" id="dni" name="dni" required>
+                </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre:</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                  <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="mb-3">
                 <label for="apellido" class="form-label">Apellido:</label>
-                <input type="text" class="form-control" id="apellido" name="apellido" required>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-user-check"></i></span>
+                  <input type="text" class="form-control" id="apellido" name="apellido" required>
+                </div>
               </div>
             </div>
           </div>
-
           <div class="mb-3">
             <label for="imagen" class="form-label">URL Imagen:</label>
-            <input type="text" class="form-control" id="imagen" name="imagen">
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-image"></i></span>
+              <input type="text" class="form-control" id="imagen" name="imagen">
+            </div>
           </div>
-
           <div class="row">
             <div class="col-md-6">
               <div class="mb-3">
@@ -57,7 +67,10 @@
             <div class="col-md-6">
               <div class="mb-3">
                 <label for="valor" class="form-label">Aplica para un descuento de:</label>
-                <input type="text" step="0.01" class="form-control" id="valor" name="valor" value='0'>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-percent"></i></span>
+                  <input type="text" step="0.01" class="form-control" id="valor" name="valor" value='0'>
+                </div>
               </div>
             </div>
           </div>

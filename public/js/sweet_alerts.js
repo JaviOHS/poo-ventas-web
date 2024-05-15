@@ -418,7 +418,7 @@ function confirmarEliminacionProducto(productId) {
                       confirmButtonText: 'Aceptar'
                   }).then((result) => {
                       if (result.isConfirmed) {
-                        window.location.href = '/sales/consult';
+                        window.location.href = '/products/consult';
                       }
                   });
               } else {

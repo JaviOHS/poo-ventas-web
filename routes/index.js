@@ -173,33 +173,54 @@ router.get('/clients/delete/:id', (req, res) => {
 
 //----------------RUTA DE CREAR PRODUCTOS----------------
 router.get('/products/create', (req, res) => {
-    res.render('products/create_products');
-});
-
-
-router.post('/products/create', (req, res) => {
-    const {id, descripcion, precio, stock, imagen } = req.body;
-    if (!descripcion || !precio || !stock) {
-        res.status(400).send('Faltan datos');
-        return;
-    }
-
     // Lee los productos del archivo JSON
     const json_products = fs.readFileSync(rutaArchivoProductos, 'utf-8');
     const products = JSON.parse(json_products);
 
+    // Obtener el último ID y sumarle 1
+    const lastProductId = products.length > 0 ? products[products.length - 1].id : 0;
+    const newId = lastProductId + 1;
+
+    // Renderizar la vista y pasar el nuevo ID y los productos como contexto
+    res.render('products/create_products', { newId, products });
+});
+
+
+
+router.post('/products/create', async (req, res) => {
+    let { id, descripcion, precio, stock, imagen } = req.body;
+    // Convertir id a número entero
+    id = parseInt(id);
+
+    // Verifica si falta algún dato
+    if (!id || !descripcion || !precio || !stock) {
+        res.status(400).send('Faltan datos');
+        return;
+    }
+    // Lee los productos del archivo JSON
+    const json_products = fs.readFileSync(rutaArchivoProductos, 'utf-8');
+    const products = JSON.parse(json_products);
+    // Verificar si el producto ya existe por su descripción
+    const existeProducto = products.some(producto => producto.descripcion === descripcion);
+    if (existeProducto) {
+        // Llamar a la función para mostrar el SweetAlert
+        res.status(400).send('El producto ya existe');
+        return;
+    }
+    // Genera un nuevo ID único
+    const lastProductId = products.length > 0 ? products[products.length - 1].id : 0;
+    const newId = lastProductId + 1;
     const newProduct = {
-        id: parseInt(id),
+        id: newId,
         descripcion,
-        precio: parseFloat(precio),
-        stock: parseInt(stock),
+        precio,
+        stock,
         imagen
     };
-
     products.push(newProduct);
     const json_updated_products = JSON.stringify(products);
     fs.writeFileSync(rutaArchivoProductos, json_updated_products, 'utf-8');
-    res.redirect('/products/create');
+    res.redirect(`/products/create?id=${newId}`);
 });
 
 router.get('/products/update', (req, res) => {
@@ -319,8 +340,8 @@ router.post('/sales/create', (req, res) => {
     // Escribir el array de ventas actualizado en el archivo sales.json
     fs.writeFileSync(rutaArchivoVentas, JSON.stringify(ventas, null, 2));
 
-    // Solo envía una respuesta, ya sea una redirección o un mensaje JSON de confirmación
-    res.redirect('/sales/create');
+    // Enviar una respuesta JSON indicando que la venta se ha registrado correctamente
+    res.json({ success: true, message: 'Venta registrada correctamente' });
 });
 
 

@@ -570,3 +570,7 @@ h4 {
 .card.card-body {
   overflow-x: hidden;
 }
+
+label{
+  font-weight: bold;
+}
