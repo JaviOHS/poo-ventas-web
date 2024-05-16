@@ -8,7 +8,6 @@ const rutaArchivoProductos = path.join(__dirname, '..', 'json', 'products.json')
 const rutaArchivoVentas= path.join(__dirname, '..', 'json', 'sales.json');
 
 const uuid = require('uuid');
-const Validaciones = require('../public/js/validaciones');
 
 const json_clients = fs.readFileSync(rutaArchivo, 'utf-8')
 let clients = JSON.parse(json_clients);
@@ -60,16 +59,9 @@ router.get('/clients/create', (req, res) => {
 
 router.post('/clients/create', async (req, res) => {
     const { dni, nombre, apellido, imagen, tipo, valor, tarjeta, numeroTarjeta } = req.body;
-    const dniEnUso = await Validaciones.dniExistente(dni);
-    
-    if (dniEnUso) {
-        return res.status(400).json({ error: 'El DNI ya está en uso.' });
-    }
-
     let valorFloat = parseFloat(valor);
-
-    // Convertir el valor de 'tarjeta' a booleano
-    const tieneTarjeta = tarjeta === 'si';
+    
+    const tieneTarjeta = tarjeta === 'si'; // Convertir el valor de 'tarjeta' a booleano
 
     let newClient = {
         id: uuid.v4(),

@@ -26,5 +26,19 @@
     "precio": 1,
     "stock": 90,
     "imagen": "https://ohanasnacks.com/wp-content/uploads/2020/09/Yuquitas-01.png"
+  },
+  {
+    "id": 5,
+    "descripcion": "Pollo asado",
+    "precio": 15.5,
+    "stock": 96,
+    "imagen": "https://myplate-prod.azureedge.us/sites/default/files/styles/large/public/2021-09/OvenRoastedChicken_527x323.jpg?itok=cnlnt4vd"
+  },
+  {
+    "id": 6,
+    "descripcion": "Pavo en salsa chimichurri",
+    "precio": 25,
+    "stock": 96,
+    "imagen": "https://okdiario.com/img/2024/01/29/filete-de-pavo-al-chimichurri.jpg"
   }
 ]
