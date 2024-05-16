@@ -1,1 +1,30 @@
-[{"id":1,"descripcion":"Ruffles","precio":"1","stock":"100","imagen":"https://www.supermercadosantamaria.com/documents/10180/10504/172205854_G.jpg"},{"id":2,"descripcion":"De Todito 50 G","precio":"1","stock":"100","imagen":"https://www.fybeca.com/dw/image/v2/BDPM_PRD/on/demandware.static/-/Sites-masterCatalog_FybecaEcuador/default/dw4b0dfec4/images/large/100245440-DE-TODITO-SNACK-EVRCRISP-SABOR-NATURAL-50-G-UNIDAD.jpg?sw=1000&sh=1000"},{"id":3,"descripcion":"Zanahorias","precio":"0.25","stock":"120","imagen":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpw9SZAvBMkbERVD9luf2hGQ-vDEw_EravelwyEOiWHg&s"}]
+[
+  {
+    "id": 1,
+    "descripcion": "Ruffles",
+    "precio": 1,
+    "stock": 65,
+    "imagen": "https://www.supermercadosantamaria.com/documents/10180/10504/172205854_G.jpg"
+  },
+  {
+    "id": 2,
+    "descripcion": "De Todito 50 G",
+    "precio": 1,
+    "stock": 75,
+    "imagen": "https://www.fybeca.com/dw/image/v2/BDPM_PRD/on/demandware.static/-/Sites-masterCatalog_FybecaEcuador/default/dw4b0dfec4/images/large/100245440-DE-TODITO-SNACK-EVRCRISP-SABOR-NATURAL-50-G-UNIDAD.jpg?sw=1000&sh=1000"
+  },
+  {
+    "id": 3,
+    "descripcion": "Zanahorias",
+    "precio": 0.25,
+    "stock": 86,
+    "imagen": ""
+  },
+  {
+    "id": 4,
+    "descripcion": "Yuquitas",
+    "precio": 1,
+    "stock": 90,
+    "imagen": "https://ohanasnacks.com/wp-content/uploads/2020/09/Yuquitas-01.png"
+  }
+]

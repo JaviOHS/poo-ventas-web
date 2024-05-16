@@ -24,9 +24,10 @@ app.use(require('./routes/index'));
 // Static 
 console.log(path.join(__dirname, 'public'));
 app.use(express.static(path.join(__dirname, 'public')));
-module.exports = app;
 
-// 404 handler
+// 404 handler - Este middleware debe estar al final de todas las definiciones de rutas
 app.use((req, res, next) => {
     res.status(404).render('404');
 });
+
+module.exports = app;

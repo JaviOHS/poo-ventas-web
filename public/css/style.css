@@ -571,8 +571,9 @@ h4 {
   overflow-x: hidden;
 }
 
-label{
+label, form-label{
   font-weight: bold;
+  text-transform: uppercase;
 }
 
 hr {
@@ -608,4 +609,50 @@ hr {
   to {
     translate: 0 20px;
   }
+}
+.card-title {
+  text-transform: uppercase;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.btn.btn-danger-sales {
+  background-color: #dc3545;
+  color: #fff;
+  border-color: #dc3545;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.btn.btn-danger-sales:hover {
+  color: #fff;
+  background-color: #830915;
+}
+
+.table {
+  border: 2px solid #dee2e6;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+  border: 3px solid #dee2e6;
+}
+
+.table th {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.table thead th {
+  background-color: #59626b;
+  color: #fff;
+  border-color: #454d55;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.text-right {
+  text-align: right;
 }

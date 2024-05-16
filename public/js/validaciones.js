@@ -57,5 +57,3 @@ class Validaciones {
   }
 }
   
-// Exportar la clase Validaciones
-module.exports = Validaciones;

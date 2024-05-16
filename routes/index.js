@@ -250,8 +250,8 @@ router.post('/products/create', async (req, res) => {
     const newProduct = {
         id: newId,
         descripcion,
-        precio,
-        stock,
+        precio: parseFloat(precio),
+        stock: parseInt(stock),
         imagen
     };
     products.push(newProduct);
@@ -298,6 +298,17 @@ router.post('/products/update/:id', (req, res) => {
     }
 });
 
+router.get('/json/sales.json', (req, res) => {
+    fs.readFile(rutaArchivoVentas, 'utf-8', (err, data) => {
+      if (err) {
+        console.error('Error al leer el archivo JSON:', err);
+        res.status(500).json({ error: 'Error interno del servidor' });
+        return;
+      }
+      res.json(JSON.parse(data));
+    });
+  });
+  
 //---------------- CONSULTAR PRODUCTOS----------------
 router.get('/products/consult', (req, res) => {
     // Leer el archivo JSON de productos
@@ -360,7 +371,6 @@ router.get('/sales/create', (req, res) => {
 // Ruta para procesar la creación de una nueva venta
 router.post('/sales/create', (req, res) => {
     const venta = req.body;
-    const rutaArchivoVentas = path.join(__dirname, '..', 'json', 'sales.json');
 
     // Leer el archivo sales.json existente o crear uno nuevo si no existe
     let ventas = [];
@@ -380,10 +390,29 @@ router.post('/sales/create', (req, res) => {
     // Escribir el array de ventas actualizado en el archivo sales.json
     fs.writeFileSync(rutaArchivoVentas, JSON.stringify(ventas, null, 2));
 
+    // Leer el archivo products.json para obtener los datos de los productos
+    let productos = [];
+    try {
+        const fileData = fs.readFileSync(rutaArchivoProductos, 'utf8');
+        productos = JSON.parse(fileData);
+    } catch (err) {
+        // El archivo no existe, no hay problema
+    }
+
+    // Actualizar el stock de los productos vendidos
+    // Actualizar el stock de los productos vendidos
+    venta.detalle.forEach(item => {
+        const producto = productos.find(p => p.descripcion === item.producto); // Buscar el producto por su nombre
+        if (producto) {
+            producto.stock -= item.cantidad; // Actualizar el stock del producto
+        }
+    });
+    // Escribir el array de productos actualizado en el archivo products.json
+    fs.writeFileSync(rutaArchivoProductos, JSON.stringify(productos, null, 2));
+
     // Enviar una respuesta JSON indicando que la venta se ha registrado correctamente
     res.json({ success: true, message: 'Venta registrada correctamente' });
 });
-
 
 // Ruta para obtener el número de factura más alto
 router.get('/sales/highestInvoiceNumber', (req, res) => {
@@ -458,16 +487,29 @@ router.get('/sales/update', (req, res) => {
     res.render('sales/update_sales', { sales });
 });
 
+// Ruta para manejar la actualización de una venta específica
 router.post('/sales/update/:factura', (req, res) => {
     const salesFactura = req.params.factura;
     const { fecha, hora, cliente, subtotal, descuento, iva, total, detalle } = req.body;
 
-    // Buscar la venta por su número de factura en el array 'sales'
-    const saleIndex = sales.findIndex(sale => sale.factura === salesFactura);
+    // Leer los datos del archivo JSON de ventas
+    let ventas = [];
+    try {
+        const fileData = fs.readFileSync(rutaArchivoVentas, 'utf8');
+        ventas = JSON.parse(fileData);
+    } catch (err) {
+        // El archivo no existe o está vacío, no hay problema
+    }
 
-    if (saleIndex !== -1) {
+    // Buscar la venta por su número de factura en el array 'ventas'
+    const ventaIndex = ventas.findIndex(venta => venta.factura === salesFactura);
+
+    if (ventaIndex !== -1) {
+        // Obtener la venta original antes de la actualización
+        const ventaOriginal = ventas[ventaIndex];
+
         // Actualizar los datos de la venta encontrada
-        sales[saleIndex] = {
+        ventas[ventaIndex] = {
             factura: salesFactura,
             fecha,
             hora,
@@ -479,9 +521,48 @@ router.post('/sales/update/:factura', (req, res) => {
             detalle: detalle // Asegúrate de que 'detalle' contenga el nuevo detalle de la venta
         };
 
-        // Actualizar el archivo JSON con los datos actualizados
-        const jsonSales = JSON.stringify(sales);
-        fs.writeFileSync(rutaArchivoVentas, jsonSales, 'utf-8');
+        // Actualizar el archivo JSON con los datos actualizados de ventas
+        const jsonVentas = JSON.stringify(ventas);
+        fs.writeFileSync(rutaArchivoVentas, jsonVentas, 'utf-8');
+
+        // Leer los datos del archivo JSON de productos
+        let productos = [];
+        try {
+            const fileData = fs.readFileSync(rutaArchivoProductos, 'utf8');
+            productos = JSON.parse(fileData);
+        } catch (err) {
+            // El archivo no existe o está vacío, no hay problema
+        }
+
+        // Iterar sobre los productos vendidos y ajustar su stock
+        detalle.forEach(item => {
+            const producto = productos.find(p => p.descripcion === item.producto); // Buscar el producto por su nombre
+            if (producto) {
+                // Obtener la cantidad original y la cantidad nueva
+                const cantidadOriginal = ventaOriginal.detalle.find(d => d.producto === item.producto)?.cantidad || 0;
+                const cantidadNueva = item.cantidad;
+                
+                // Calcular la diferencia entre la cantidad nueva y la cantidad original
+                const diferencia = cantidadNueva - cantidadOriginal;
+
+                // Restar la diferencia del stock del producto
+                producto.stock -= diferencia;
+            }
+        });
+
+        // Identificar los productos eliminados y restaurar su stock correspondiente
+        ventaOriginal.detalle.forEach(itemOriginal => {
+            const productoEliminado = detalle.find(itemNuevo => itemNuevo.producto === itemOriginal.producto);
+            if (!productoEliminado) {
+                const producto = productos.find(p => p.descripcion === itemOriginal.producto);
+                if (producto) {
+                    producto.stock += itemOriginal.cantidad; // Restaurar el stock del producto eliminado
+                }
+            }
+        });
+
+        // Escribir el array de productos actualizado en el archivo products.json
+        fs.writeFileSync(rutaArchivoProductos, JSON.stringify(productos, null, 2));
 
         // Responder con un mensaje de éxito
         res.status(200).json({ message: 'Venta actualizada correctamente' });
@@ -491,13 +572,13 @@ router.post('/sales/update/:factura', (req, res) => {
     }
 });
 
+
 router.get('/sales/update_specific/:factura', (req, res) => {
     const numberOfRows = 1;
     const saleFactura = req.params.factura;
     const sale = sales.find(sale => sale.factura === saleFactura);
     if (!sale) {
-        // Si no se encuentra la venta, devolver un error o redirigir a una página de error
-        return res.status(404).send('Venta no encontrada');
+        return res.status(404).send('Venta no encontrada'); // Si no se encuentra la venta, devolver un error o redirigir a una página de error
     }
     res.render('sales/update_sales_specific', { clients, sale, numberOfRows });
 });
@@ -529,9 +610,33 @@ router.get('/sales/consult/:factura', (req, res) => {
     }
 });
 
-//----------------RUTA DE BORRAR VENTAS----------------
+//----------------ELIMINAR VENTAS----------------
 router.get('/sales/delete', (req, res) => {
-    res.render('sales/delete_sale');
+    const json_sales = fs.readFileSync(rutaArchivoVentas, 'utf-8');
+    const sales = JSON.parse(json_sales);
+    res.render('sales/delete_sales', { sales });
+});
+
+// Ruta para manejar la eliminación de una venta específica
+router.delete('/sales/delete/:factura', (req, res) => {
+    const salesFactura = req.params.factura;
+    // Leer los datos del archivo JSON
+    const sales = JSON.parse(fs.readFileSync(rutaArchivoVentas, 'utf-8'));
+
+    // Buscar el índice de la venta a eliminar
+    const index = sales.findIndex(sale => sale.factura === salesFactura);
+
+    if (index !== -1) {
+        // Si se encuentra la venta, eliminarla del array
+        sales.splice(index, 1);
+
+        // Guardar los cambios en el archivo JSON
+        fs.writeFileSync(rutaArchivoVentas, JSON.stringify(sales, null, 2));
+
+        res.status(200).json({ message: 'Factura eliminada correctamente' });
+    } else {
+        res.status(404).json({ error: 'Factura no encontrada' });
+    }
 });
 
 module.exports = router;

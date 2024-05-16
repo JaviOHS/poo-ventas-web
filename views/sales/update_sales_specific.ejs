@@ -106,7 +106,7 @@
             </div>
             <hr>
             <div class="mb-3 text-center">
-              <button type="button" class="btn btn-primary" onclick="updateSales.agregarProducto()">
+              <button type="button" class="btn btn-primary" onclick="updateSales.agregarFilaProducto()">
                 <i class="fas fa-plus"></i> Agregar Producto
               </button>
             </div>
@@ -150,12 +150,28 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="cantidad_<%= i %>" class="form-label">Cantidad:</label>
+                    <label for="stock_<%= i %>" class="form-label">Stock:</label>
                     <div class="input-group">
-                      <span class="input-group-text"><i class="fa-solid fa-people-carry-box"></i></span>
-                      <input type="number" class="form-control" id="cantidad_<%= i %>" name="cantidad" required onchange="updateSales.calcularSubtotal()">
+                      <span class="input-group-text"><i class="fa-solid fa-dolly"></i></span>
+                      <input type="number" class="form-control" id="stock_<%= i %>" name="stock" readonly>
                     </div>
                   </div>
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="cantidad" class="form-label">Cantidad:</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-people-carry-box"></i></span>
+                        <input type="number" class="form-control" id="cantidad_<%= i %>" name="cantidad" required onchange="updateSales.calcularSubtotal()">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-mb-3"> <!-- Coloca aquí el tamaño que desees -->
+                  <button type="button" class="btn btn-danger-sales form-control" onclick="updateSales.eliminarFila(this)">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
                 </div>
               </div>
               <% } %>

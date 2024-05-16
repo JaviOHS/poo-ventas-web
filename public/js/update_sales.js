@@ -1,6 +1,7 @@
 class UpdateSales {
   constructor() {
     // Resto de tu constructor
+    this.buscarProductosComprados();
     this.fechaInput = document.getElementById('newFecha');
     this.horaInput = document.getElementById('newHora');
     this.actualizarFechaYHora();
@@ -10,13 +11,24 @@ class UpdateSales {
     setInterval(() => this.actualizarFechaYHora(), 1000);
     const cantidadInput = document.querySelector('input[name="cantidad"]');
     cantidadInput.addEventListener('input', (event) => this.validarCantidad(event));
+  
+    // Llama al método para buscar los productos comprados
   }
 
   init() {
     document.addEventListener('DOMContentLoaded', () => {
       this.configurarEventListeners();
+      this.agregarProducto();
+      // Llamar a buscarProductoPorId con el valor inicial del primer producto
+      const idInput = document.querySelector('[name="id"]');
+      if (idInput) {
+        this.buscarProductoPorId(idInput);
+      } else {
+        console.error("El elemento con el nombre 'id' no se encontró en el DOM.");
+      }
     });
   }
+
 
   configurarEventListeners() {
     const idInput = document.getElementById('id');
@@ -25,6 +37,25 @@ class UpdateSales {
     } else {
       console.error("El elemento con el ID 'id' no se encontró en el DOM.");
     }
+  }
+
+  buscarProductosComprados() {
+    fetch('/json/sales.json')
+      .then(response => response.json())
+      .then(data => {
+        const facturaActual = document.getElementById('factura').value;
+        const venta = data.find(venta => venta.factura === facturaActual);
+        if (venta) {
+          // Llama al método agregarProducto() una sola vez y pasa la lista de productos comprados
+          this.agregarProducto(venta.detalle);
+        } else {
+          console.error('No se encontraron productos para la factura actual');
+        }
+      })
+      .catch(error => {
+        console.error('Error al buscar productos:', error);
+        // Manejar el error, por ejemplo, mostrar un mensaje al usuario
+      });
   }
 
   buscarProductoPorId(input) {
@@ -37,9 +68,11 @@ class UpdateSales {
         if (productoEncontrado) {
           row.querySelector('[name="producto"]').value = productoEncontrado.descripcion;
           row.querySelector('[name="precio"]').value = productoEncontrado.precio;
+          row.querySelector('[name="stock"]').value = productoEncontrado.stock;
         } else {
           row.querySelector('[name="producto"]').value = '';
           row.querySelector('[name="precio"]').value = '';
+          row.querySelector('[name="stock"]').value = '';
           Swal.fire({
             icon: 'error',
             title: 'Producto no encontrado',
@@ -68,10 +101,81 @@ class UpdateSales {
     this.fechaInput.value = fechaActual;
     this.horaInput.value = horaActual;
   }
+ 
+  agregarProducto(productos) {
+    const productInputs = document.getElementById('product-inputs'); // Limpiar los productos antes de agregar los nuevos
+    productInputs.innerHTML = '';
+    productos.forEach(producto => {
+      const newRow = `
+        <div class="row">
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="id" class="form-label">ID:</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-barcode"></i></span>
+                <input type="number" class="form-control" name="id" required onchange="updateSales.buscarProductoPorId(this)" ${producto && producto.id ? `value="${producto.id}"` : ''}>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="producto" class="form-label">Producto:</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-box"></i></span>
+                <input type="text" class="form-control" name="producto" required readonly ${producto && producto.producto ? `value="${producto.producto}"` : ''}>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="precio" class="form-label">Precio:</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-money-check-dollar"></i></span>
+                <input type="number" class="form-control" name="precio" readonly required placeholder="$" ${producto && producto.precio ? `value="${producto.precio}"` : ''} onchange="updateSales.calcularSubtotal()">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="stock" class="form-label">Stock:</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-dolly"></i></span>
+                <input type="number" class="form-control" name="stock" readonly value="${producto && producto.stock ? producto.stock : ''}">
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-md-3">
+              <div class="mb-3">
+                <label for="cantidad" class="form-label">Cantidad:</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-people-carry-box"></i></span>
+                  <input type="number" class="form-control" name="cantidad" required onchange="updateSales.calcularSubtotal()">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-mb-3"> <!-- Coloca aquí el tamaño que desees -->
+            <button type="button" class="btn btn-danger-sales form-control" onclick="updateSales.eliminarFila(this)">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+      `;
+      productInputs.insertAdjacentHTML('beforeend', newRow);
+    })
+    this.adjuntarEventos();
+  }
 
-  agregarProducto() {
+  adjuntarEventos() {
+    const cantidadInputs = document.querySelectorAll('input[name="cantidad"]');
+    cantidadInputs.forEach(input => {
+      input.addEventListener('input', (event) => this.validarCantidad(event));
+    });
+  }
+
+  agregarFilaProducto() {
     const productInputs = document.getElementById('product-inputs');
-    const updateSales = this; // Asignar una referencia al objeto updateSales
     const newRow = `
       <div class="row">
         <div class="col-md-3">
@@ -103,18 +207,57 @@ class UpdateSales {
         </div>
         <div class="col-md-3">
           <div class="mb-3">
-            <label for="cantidad" class="form-label">Cantidad:</label>
+            <label for="stock" class="form-label">Stock:</label>
             <div class="input-group">
-              <span class="input-group-text"><i class="fa-solid fa-people-carry-box"></i></span>
-              <input type="number" class="form-control" name="cantidad" required onchange="updateSales.calcularSubtotal()">
+              <span class="input-group-text"><i class="fa-solid fa-dolly"></i></span>
+              <input type="number" class="form-control" name="stock" readonly>
             </div>
           </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-3">
+            <div class="mb-3">
+              <label for="cantidad" class="form-label">Cantidad:</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-people-carry-box"></i></span>
+                <input type="number" class="form-control" name="cantidad" required onchange="updateSales.calcularSubtotal()">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-mb-3"> <!-- Coloca aquí el tamaño que desees -->
+          <button type="button" class="btn btn-danger-sales form-control" onclick="updateSales.eliminarFilaProducto(this)">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
         </div>
       </div>
     `;
     productInputs.insertAdjacentHTML('beforeend', newRow);
+    this.adjuntarEventos();
+  }
+  
+  eliminarFilaProducto(button) {
+    const row = button.closest('.row');
+    row.remove();
   }
 
+  validarCantidad(event) {
+    const input = event.target;
+    if (!Validaciones.soloNumeros(input.value)) {
+      input.value = input.value.replace(/[^\d]/g, '');
+    }
+    const cantidad = parseInt(input.value);
+    const stockDisponible = parseInt(document.querySelector('input[name="stock"]').value);
+  
+    if (cantidad > stockDisponible) {
+      Swal.fire({
+        icon: 'error',
+        title: '¡Cantidad excedida!',
+        text: 'Por favor, ingrese una cantidad menor o igual al stock disponible.',
+      });
+      input.value = '';
+    }
+  }
 
   calcularSubtotal() {
     const precioInputs = document.querySelectorAll('input[name="precio"]');
@@ -157,10 +300,15 @@ class UpdateSales {
     const productos = [];
     const productInputRows = document.querySelectorAll('#product-inputs .row');
     productInputRows.forEach((row) => {
-      const producto = row.querySelector('input[name="producto"]').value;
-      const precio = parseFloat(row.querySelector('input[name="precio"]').value);
-      const cantidad = parseInt(row.querySelector('input[name="cantidad"]').value);
-      productos.push({ producto, precio, cantidad });
+      const productoInput = row.querySelector('input[name="producto"]');
+      const precioInput = row.querySelector('input[name="precio"]');
+      const cantidadInput = row.querySelector('input[name="cantidad"]');
+      if (productoInput && precioInput && cantidadInput) {
+        const producto = productoInput.value;
+        const precio = parseFloat(precioInput.value);
+        const cantidad = parseInt(cantidadInput.value);
+        productos.push({ producto, precio, cantidad });
+      }
     });
 
     // Crear objeto de venta
@@ -218,7 +366,7 @@ class UpdateSales {
     // Evitar que se envíe el formulario por defecto
     event.preventDefault();
   }
-  
+
   verificarCedula() {
     const cedula = document.getElementById('ci').value;
     if (cedula) {
@@ -253,11 +401,9 @@ class UpdateSales {
       });
   }
 
-  validarCantidad(event) {
-    const input = event.target;
-    if (!Validaciones.soloNumeros(input.value)) {
-      input.value = input.value.replace(/[^\d]/g, ''); // Eliminar cualquier caracter que no sea un número
-    }
+  eliminarFila(button) {
+    const row = button.closest('.row');
+    row.remove();
   }
 }
 

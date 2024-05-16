@@ -126,7 +126,7 @@
                     <label for="id_<%= i %>" class="form-label">ID:</label>
                     <div class="input-group">
                       <span class="input-group-text"><i class="fa-solid fa-barcode"></i></span>
-                      <input type="text" class="form-control" id="id_<%= i %>" name="id" required onchange="sale.buscarProductoPorId(this)">
+                      <input type="number" class="form-control" id="id_<%= i %>" name="id" required onchange="sale.buscarProductoPorId(this)">
                     </div>
                   </div>
                 </div>
@@ -150,12 +150,29 @@
                 </div>
                 <div class="col-md-3">
                   <div class="mb-3">
-                    <label for="cantidad_<%= i %>" class="form-label">Cantidad:</label>
+                    <label for="stock_<%= i %>" class="form-label">Stock:</label>
                     <div class="input-group">
-                      <span class="input-group-text"><i class="fa-solid fa-people-carry-box"></i></span>
-                      <input type="number" class="form-control" id="cantidad_<%= i %>" name="cantidad" required onchange="sale.calcularSubtotal()">
+                      <span class="input-group-text"><i class="fa-solid fa-dolly"></i></span>
+                      <input type="number" class="form-control" id="stock_<%= i %>" name="stock" readonly>
                     </div>
                   </div>
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="cantidad_<%= i %>" class="form-label">Cantidad:</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-people-carry-box"></i></span>
+                        <input type="number" class="form-control" id="cantidad_<%= i %>" name="cantidad" required onchange="sale.calcularSubtotal()">
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                <div class="col-mb-3"> <!-- Coloca aquí el tamaño que desees -->
+                  <button type="button" class="btn btn-danger-sales form-control" onclick="sale.eliminarFila(this)">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
                 </div>
               </div>
               <% } %>

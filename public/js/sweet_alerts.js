@@ -476,3 +476,42 @@ function mostrarInformacion(nombreCompleto) {
       });
 }
 
+// sweets_alerts.js
+function confirmarEliminacionFactura() {
+  $('.btn-delete').click(function() {
+    var factura = $(this).data('factura');
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción eliminará la factura número ' + factura + '. No podrás recuperarla.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: '/sales/delete/' + factura,
+          type: 'DELETE',
+          success: function(response) {
+            Swal.fire(
+              '¡Eliminado!',
+              'La factura ha sido eliminada correctamente.',
+              'success'
+            ).then(() => {
+              location.reload();
+            });
+          },
+          error: function(error) {
+            Swal.fire(
+              'Error',
+              'Ocurrió un error al eliminar la factura.',
+              'error'
+            );
+          }
+        });
+      }
+    });
+  });
+}

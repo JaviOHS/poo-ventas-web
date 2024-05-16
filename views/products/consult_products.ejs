@@ -25,19 +25,16 @@
             <div class="card mb-3">
               <div class="card-header-consult">
                 <div class="avatar">
-                  <img src="<%= product.imagen || 'https://cdn-icons-png.freepik.com/512/10004/10004062.png' %>" alt="Avatar">
+                  <img src="<%= product.imagen || 'https://cdn3d.iconscout.com/3d/premium/thumb/delivery-box-6377301-5298715.png?f=webp' %>" alt="Avatar">
                 </div>
               </div>
               <div class="card-body">
                 <h2 class="card-title text-center"><%= product.descripcion %></h2>
               </div>
               <div class="card-footer">
-                <h3>ID: </h3>
-                <p class="card-text text-center"><%= product.id %></p>
-                <h3>Precio: </h3>
-                <p class="card-text text-center"><%= product.precio %></p>
-                <h3>Stock: </h3>
-                <p class="card-text text-center"><%= product.stock %></p>
+                <p class="card-text text-center"><strong>ID: </strong><%= product.id %></p><hr>
+                <p class="card-text text-center"><strong>PRECIO: </strong><%= product.precio %></p><hr>
+                <p class="card-text text-center"><strong>STOCK: </strong><%= product.stock %></p><hr>
               </div>
             </div>
           </div>
