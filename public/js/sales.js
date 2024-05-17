@@ -124,10 +124,12 @@ class Sale {
             </div>
           </div>
           </div>
-          <div class="col-mb-3"> <!-- Coloca aquí el tamaño que desees -->
-            <button type="button" class="btn btn-danger-sales form-control" onclick="sale.eliminarFila(this)"">
+          <div class="col-mb-3 text-center"> <!-- Coloca aquí el tamaño que desees -->
+            <button type="button" class="btn delete-button" onclick="sale.eliminarFila(this)">
               <i class="fa-solid fa-trash-can"></i>
-            </button>        
+            </button>
+          </div>
+          <div style="margin-top: 50px;">
           </div>
         </div>
       </div>

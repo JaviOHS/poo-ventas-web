@@ -40,5 +40,19 @@
     "precio": 25,
     "stock": 96,
     "imagen": "https://okdiario.com/img/2024/01/29/filete-de-pavo-al-chimichurri.jpg"
+  },
+  {
+    "id": 7,
+    "descripcion": "Pony malta",
+    "precio": 1.25,
+    "stock": 100,
+    "imagen": "https://shop.ecuaworldla.com/cache/original/product/176/8RDJgqTnELaQeqdLYdWTugdN5QII6m2exo09PwvI.jpg"
+  },
+  {
+    "id": 8,
+    "descripcion": "Corona",
+    "precio": 3.5,
+    "stock": 80,
+    "imagen": "https://catu.ec/wp-content/uploads/2022/03/Cerveza-Corona-Extra-355ml-Modelo.jpg"
   }
 ]

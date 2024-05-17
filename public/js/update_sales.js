@@ -155,10 +155,12 @@ class UpdateSales {
               </div>
             </div>
           </div>
-          <div class="col-mb-3"> <!-- Coloca aquí el tamaño que desees -->
-            <button type="button" class="btn btn-danger-sales form-control" onclick="updateSales.eliminarFila(this)">
+          <div class="col-mb-3 text-center"> <!-- Coloca aquí el tamaño que desees -->
+            <button type="button" class="btn delete-button" onclick="updateSales.eliminarFila(this)">
               <i class="fa-solid fa-trash-can"></i>
             </button>
+          </div>
+          <div style="margin-top: 50px;">
           </div>
         </div>
       `;
@@ -225,10 +227,12 @@ class UpdateSales {
             </div>
           </div>
         </div>
-        <div class="col-mb-3"> <!-- Coloca aquí el tamaño que desees -->
-          <button type="button" class="btn btn-danger-sales form-control" onclick="updateSales.eliminarFilaProducto(this)">
+        <div class="col-mb-3 text-center"> <!-- Coloca aquí el tamaño que desees -->
+          <button type="button" class="btn delete-button" onclick="updateSales.eliminarFilaProducto(this)">
             <i class="fa-solid fa-trash-can"></i>
           </button>
+        </div>
+        <div style="margin-top: 50px;">
         </div>
       </div>
     `;

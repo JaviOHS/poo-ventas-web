@@ -88,6 +88,7 @@ a {
 
 .navbar li {
   position: relative;
+  
 }
 
 .navbar a,
@@ -101,6 +102,7 @@ a {
   color: #555555;
   white-space: nowrap;
   transition: 0.3s;
+  font-size: 16px;
 }
 
 .navbar a i,
@@ -199,6 +201,10 @@ a {
 /*--------------------------------------------------------------
 # Sections General
 --------------------------------------------------------------*/
+.title, h3{
+  text-transform: uppercase;
+}
+
 section {
   padding: 60px 0;
   overflow: hidden;
@@ -214,7 +220,7 @@ section {
 }
 
 .section-title h2 {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: bold;
   text-transform: uppercase;
   position: relative;
@@ -240,6 +246,7 @@ section {
 
 .section-title p {
   margin: 15px 0 0 0;
+  font-size: 20px;
 }
 
 
@@ -426,7 +433,7 @@ h4 {
   box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
   padding: 30px 0;
   color: #222222;
-  font-size: 14px;
+  font-size: 18px;
   text-align: center;
 }
 
@@ -517,18 +524,6 @@ h4 {
   object-fit: cover;
 }
 
-.update-button {
-  background-color: #16b658;
-  color: #fff;
-  border-color: #16b658;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-}
-
-.update-button:hover {
-  color: #fff;
-  background-color: #016e2f;
-}
-
 /* ELIMINAR CLIENTES */
 .card-header-delete {
   background-image: linear-gradient(90deg, #dc3545 0%, #790813 35%);
@@ -555,18 +550,6 @@ h4 {
   object-fit: cover;
 }
 
-.delete-button {
-  background-color: #dc3545;
-  color: #fff;
-  border-color: #dc3545;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-}
-
-.delete-button:hover {
-  color: #fff;
-  background-color: #830915;
-}
-
 .card.card-body {
   overflow-x: hidden;
 }
@@ -574,6 +557,7 @@ h4 {
 label, form-label{
   font-weight: bold;
   text-transform: uppercase;
+  font-size: 18px;
 }
 
 hr {
@@ -629,30 +613,108 @@ hr {
 }
 
 .table {
-  border: 2px solid #dee2e6;
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+  font-size: 18px;
+  text-align: center;
+}
+
+.table-bordered {
+  border: 1px solid #dee2e6;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.thead-dark th {
+  color: #fff;
+  background-color: #3498db;
+  border-color: #228fd8;
 }
 
 .table th,
 .table td {
-  vertical-align: middle;
-  border: 3px solid #dee2e6;
+  padding: 1rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
 }
 
-.table th {
-  font-weight: bold;
-  text-transform: uppercase;
+.table .thead-dark th {
+  padding: 1rem;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 20px;
 }
 
-.table thead th {
-  background-color: #59626b;
+.card-text{
+  font-size: 18px;
+}
+
+h4 {
+  margin-bottom: 0;
+  font-size: 18px;
+}
+
+/* BOTONES */
+.update-button {
+  background: #16b658;
   color: #fff;
-  border-color: #454d55;
+  border: none;
+  transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 10px 20px; 
+  border-radius: 5px;  
+  cursor: pointer; 
+  background-size: 200% 100%; 
+  background-position: left bottom; 
 }
 
-.table-hover tbody tr:hover {
-  background-color: #f8f9fa;
+.update-button:hover {
+  background: #057e37; 
+  background-position: right bottom; 
+  color: #fff;
 }
 
-.text-right {
-  text-align: right;
+.consult-button {
+  background: #007bff; 
+  color: #fff;
+  border: none;
+  transition: background 0.5s ease-in-out, color 0.5s ease-in-out; 
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 10px 20px; 
+  border-radius: 10px; 
+  cursor: pointer; 
+  background-size: 200% 100%; 
+  background-position: left bottom;
+  margin: 30px;
 }
+
+.consult-button:hover {
+  background: #02458d; 
+  background-position: right bottom;
+  color: #fff;
+}
+
+.delete-button {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 10px 20px; 
+  border-radius: 10px; 
+  cursor: pointer; 
+  background-size: 200% 100%;
+  background-position: left bottom; 
+}
+
+.delete-button:hover {
+  background: #830915; 
+  background-position: right bottom;
+  color: #fff;
+}
+

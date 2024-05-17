@@ -306,8 +306,25 @@ router.get('/products/consult', (req, res) => {
     // Leer el archivo JSON de productos
     const json_products = fs.readFileSync(rutaArchivoProductos, 'utf-8');
     const products = JSON.parse(json_products);
-    // Renderizar la plantilla 'consult_products' y pasarle la variable 'products'
-    res.render('products/consult_products', { products: products });
+
+    // Calcular los productos más caros, más baratos, con menos stock y con más stock
+    const mostExpensiveProduct = products.length > 0 ? products.reduce((max, product) => (product.precio > max.precio ? product : max), products[0]) : null;
+    const cheapestProduct = products.length > 0 ? products.reduce((min, product) => (product.precio < min.precio ? product : min), products[0]) : null;
+    const lowestStockProduct = products.length > 0 ? products.reduce((min, product) => (product.stock < min.stock ? product : min), products[0]) : null;
+    const highestStockProduct = products.length > 0 ? products.reduce((max, product) => (product.stock > max.stock ? product : max), products[0]) : null;
+    
+    // Calcular la ganancia estimada total
+    const totalProfit = products.reduce((total, product) => total + (product.precio * product.stock), 0);
+
+    // Renderizar la plantilla 'consult_products' y pasarle las variables necesarias
+    res.render('products/consult_products', {
+        products,
+        mostExpensiveProduct,
+        cheapestProduct,
+        lowestStockProduct,
+        highestStockProduct,
+        totalProfit
+    });
 });
 
 router.get('/products/consult/:id', (req, res) => {

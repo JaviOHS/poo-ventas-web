@@ -478,11 +478,11 @@ function mostrarInformacion(nombreCompleto) {
 
 // sweets_alerts.js
 function confirmarEliminacionFactura() {
-  $('.btn-delete').click(function() {
+  $('.delete-button').click(function() {
     var factura = $(this).data('factura');
     Swal.fire({
       title: '¿Estás seguro?',
-      text: 'Esta acción eliminará la factura número ' + factura + '. No podrás recuperarla.',
+      text: 'Esta acción eliminará la factura número ' + factura + '... No podrás recuperarla.',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

@@ -106,13 +106,13 @@
             </div>
             <hr>
             <div class="mb-3 text-center">
-              <button type="button" class="btn btn-primary" onclick="sale.agregarProducto()">
-                <i class="fas fa-plus"></i> Agregar Producto
+              <button type="button" class="btn consult-button" onclick="sale.agregarProducto()">
+                <i class="fa-solid fa-square-plus"></i> Agregar Producto
               </button>
             </div>
             <div class="text-center">
-              <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Registrar Venta
+              <button type="submit" class="btn consult-button">
+                <i class="fa-solid fa-cart-plus"></i> Realizar venta
               </button>
             </div>
             <br>
@@ -167,12 +167,14 @@
                       </div>
                     </div>
                   </div>
-                  
+                
                 </div>
-                <div class="col-mb-3"> <!-- Coloca aquí el tamaño que desees -->
-                  <button type="button" class="btn btn-danger-sales form-control" onclick="sale.eliminarFila(this)">
+                <div class="col-mb-3 text-center"> <!-- Coloca aquí el tamaño que desees -->
+                  <button type="button" class="btn delete-button" onclick="sale.eliminarFila(this)">
                     <i class="fa-solid fa-trash-can"></i>
                   </button>
+                </div>
+                <div style="margin-top: 50px;">
                 </div>
               </div>
               <% } %>
@@ -181,8 +183,8 @@
           </fieldset>
         </form>
         <div class="text-center">
-          <a href="/gestion_ventas" class="btn btn-primary">
-            <i class="fas fa-home"></i> Regresar
+          <a href="/gestion_ventas" class="btn consult-button">
+            <i class="fa-solid fa-arrow-left"></i> Regresar
           </a>
         </div>
       </div>

@@ -15,7 +15,6 @@
       <br>
       <div class="section-title" data-aos="fade-up">
         <h2>CONSULTAR INFORMACION DE VENTAS</h2>
-        <br>
         <p>Consulte informacion de ventas.</p>
       </div>
       <div class="container p-4">
@@ -43,6 +42,12 @@
           <% }) %>
         </div>
       </div>
+
+      <div class="text-center">
+        <a href="/gestion_ventas" class="btn consult-button">
+          <i class="fa-solid fa-arrow-left"></i> Regresar
+        </a>
+      </div>
       
       <div class="section-title" data-aos="fade-up">
         <h2>Información Adicional</h2>
@@ -52,39 +57,36 @@
               <table class="table table-bordered table-hover">
                 <thead class="thead-dark">
                   <tr>
-                    <th>Estadísticas de Facturación</th>
-                    <th class="text-right">Valor</th>
+                    <th><i class="fa-solid fa-square-poll-vertical"></i> ESTADÍSTICA DE FACTURAS</th>
+                    <th><i class="fa-solid fa-piggy-bank"></i> VALOR</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Total de facturas registradas:</td>
-                    <td class="text-right" id="totalInvoices">0</td>
+                    <td><h4><i class="fas fa-receipt"></i> Total de facturas registradas:</h4></td>
+                    <td id="totalInvoices">0</td>
                   </tr>
                   <tr>
-                    <td>Suma total de todas las facturas:</td>
-                    <td class="text-right" id="totalSum"> 0.00</td>
+                    <td><h4><i class="fas fa-coins"></i> Suma total de todas las facturas:</h4></td>
+                    <td id="totalSum"> 0.00</td>
                   </tr>
                   <tr>
-                    <td>Valor máximo de una factura:</td>
-                    <td class="text-right" id="maxInvoice"><i class="fas fa-dollar-sign"></i> 0.00</td>
+                    <td><h4><i class="fas fa-arrow-up"></i> Valor máximo de una factura:</h4></td>
+                    <td id="maxInvoice"><i class="fas fa-dollar-sign"></i> 0.00</td>
                   </tr>
                   <tr>
-                    <td>Valor mínimo de una factura:</td>
-                    <td class="text-right" id="minInvoice"><i class="fas fa-dollar-sign"></i> 0.00</td>
+                    <td><h4><i class="fas fa-arrow-down"></i> Valor mínimo de una factura:</h4></td>
+                    <td id="minInvoice"><i class="fas fa-dollar-sign"></i> 0.00</td>
                   </tr>
                   <tr>
-                    <td>Suma del total de todas las facturas:</td>
-                    <td class="text-right" id="totalSumAll"><i class="fas fa-dollar-sign"></i> 0.00</td>
+                    <td><h4><i class="fas fa-coins"></i> Suma del total de todas las facturas:</h4></td>
+                    <td id="totalSumAll"><i class="fas fa-dollar-sign"></i> 0.00</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>          
         </div>
-      </div>
-      <div class="text-center">
-        <a href="/gestion_ventas" class="btn btn-primary"><i class="fas fa-home"></i> Regresar</a>
       </div>
     </div>
   </section>
@@ -100,11 +102,12 @@
     const totalSumAll = sales.reduce((sum, sale) => sum + parseFloat(sale.total), 0);
 
     // Actualizar los valores en la tabla
-    document.getElementById('totalInvoices').innerHTML = `<i class="fas fa-file-invoice"></i> ${totalInvoices}`;
-    document.getElementById('totalSum').innerHTML = `<i class="fas fa-dollar-sign"></i> ${totalSum.toFixed(2)}`;
-    document.getElementById('maxInvoice').innerHTML = `<i class="fas fa-arrow-alt-circle-up"></i> ${maxInvoice.toFixed(2)}`;
-    document.getElementById('minInvoice').innerHTML = `<i class="fas fa-arrow-alt-circle-down"></i> ${minInvoice.toFixed(2)}`;
-    document.getElementById('totalSumAll').innerHTML = `<i class="fas fa-chart-line"></i> ${totalSumAll.toFixed(2)}`;
+    document.getElementById('totalInvoices').innerHTML = `<td class="text-center"><i class="fas fa-file-invoice"></i> ${totalInvoices}</td>`;
+    document.getElementById('totalSum').innerHTML = `<td class="text-center"><i class="fas fa-dollar-sign"></i> ${totalSum.toFixed(2)}</td>`;
+    document.getElementById('maxInvoice').innerHTML = `<td class="text-center"><i class="fas fa-arrow-alt-circle-up"></i> ${maxInvoice.toFixed(2)}</td>`;
+    document.getElementById('minInvoice').innerHTML = `<td class="text-center"><i class="fas fa-arrow-alt-circle-down"></i> ${minInvoice.toFixed(2)}</td>`;
+    document.getElementById('totalSumAll').innerHTML = `<td class="text-center"><i class="fas fa-chart-line"></i> ${totalSumAll.toFixed(2)}</td>`;
+
 
   </script>
   <%- include('../partials/footer') %>

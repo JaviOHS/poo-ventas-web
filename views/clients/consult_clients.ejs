@@ -15,7 +15,6 @@
       <br>
       <div class="section-title" data-aos="fade-up">
         <h2>CONSULTAR INFORMACION DE CLIENTES</h2>
-        <br>
         <p>Consulte informacion de clientes.</p>
       </div>
       <div class="section-title" data-aos="fade-up">
@@ -57,7 +56,7 @@
                       <p class="card-text text-center"><strong>TARJETA: </strong><br>El cliente no tiene tarjeta<hr></p>
                     <% } %>
                     <p class="card-text text-center" data-type="<%= client.tipo.toLowerCase() %>"><strong>TIPO DE CLIENTE: </strong><br><%= client.tipo %></p><hr>
-                    <button class="btn btn-primary" onclick="mostrarInformacion('<%= client.nombre %> <%= client.apellido %>')"><i class="fa-solid fa-magnifying-glass fa-fade"></i> Más información</button><hr>
+                    <button class="btn consult-button" onclick="mostrarInformacion('<%= client.nombre %> <%= client.apellido %>')"><i class="fa-solid fa-magnifying-glass fa-fade"></i> Más información</button><hr>
                   </div>
                 </div>
               </div>
@@ -66,7 +65,9 @@
         </div>
       </div>
       <div class="text-center">
-        <a href="/gestion_clientes" class="btn btn-primary"><i class="fas fa-home"></i> Regresar</a>
+        <a href="/gestion_clientes" class="btn consult-button">
+          <i class="fa-solid fa-arrow-left"></i> Regresar
+        </a>
       </div>
     </div>
   </section>

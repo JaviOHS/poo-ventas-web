@@ -106,12 +106,12 @@
             </div>
             <hr>
             <div class="mb-3 text-center">
-              <button type="button" class="btn btn-primary" onclick="updateSales.agregarFilaProducto()">
-                <i class="fas fa-plus"></i> Agregar Producto
+              <button type="button" class="btn consult-button" onclick="updateSales.agregarFilaProducto()">
+                <i class="fa-solid fa-square-plus"></i> Agregar Producto
               </button>
             </div>
             <div class="text-center">
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn consult-button">
                 <i class="fas fa-save"></i> Actualizar Venta
               </button>
             </div>
@@ -169,15 +169,20 @@
                   </div>
                 </div>
                 <div class="col-mb-3"> <!-- Coloca aquí el tamaño que desees -->
-                  <button type="button" class="btn btn-danger-sales form-control" onclick="updateSales.eliminarFila(this)">
+                  <button type="button" class="btn delete-button" onclick="updateSales.eliminarFila(this)">
                     <i class="fa-solid fa-trash-can"></i>
                   </button>
+                </div>
+                <div style="margin-top: 50px;">
                 </div>
               </div>
               <% } %>
             </div>
           </fieldset>
         </form>             
+      </div>
+      <div class="text-center">
+        <a href="/gestion_ventas" class="btn consult-button"><i class="fa-solid fa-arrow-left"></i> Regresar</a>
       </div>
     </section>
     <script src="/js/validaciones.js"></script>

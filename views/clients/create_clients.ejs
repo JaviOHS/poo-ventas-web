@@ -13,7 +13,6 @@
       <br>
       <div class="section-title" data-aos="fade-up">
         <h2>INGRESAR CLIENTES</h2>
-        <br>
         <p>Ingrese los datos para registrar un nuevo cliente.</p>
       </div>
       <form id="form" class="card card-body bg-light p-4 rounded" method="POST" action="/clients/create" onsubmit="validarFormulario(event)">
@@ -96,15 +95,15 @@
               </div>
             </div>
           </div>
-          
-
           <div class="text-center">
-            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Guardar cambios</button>
+            <button type="submit" class="btn consult-button"><i class="fa-solid fa-user-plus"></i> Agregar cliente</button>
           </div>
         </fieldset>
       </form>
       <div class="text-center">
-        <a href="/gestion_clientes" class="btn btn-primary"><i class="fas fa-home"></i> Regresar</a>
+        <a href="/gestion_clientes" class="btn consult-button">
+          <i class="fa-solid fa-arrow-left"></i> Regresar
+        </a>
       </div>
     </div>
   </section>
